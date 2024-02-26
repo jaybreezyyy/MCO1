@@ -3,5 +3,11 @@ public class characterCreation{
     public int jobClass;
 
     
+    
+    public String getName(){
+        return playerName;
+    }
+
+
 
 }
