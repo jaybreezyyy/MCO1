@@ -28,6 +28,41 @@ public class GameLobby {
         System.out.println("Level: " + level);
         System.out.println("Runes: " + runes);
         System.out.println("System Messages: ");
+        
+        // Start the game lobby loop
+        startGameLoop();
+    }
+
+    private void startGameLoop() {
+        Scanner scanner = new Scanner(System.in);
+        int choice = 0;
+        do {
+            System.out.println("Enter your choice:");
+            while (!scanner.hasNextInt()) {
+                System.out.println("Invalid input. Please enter a number between 1 and 5.");
+                scanner.next(); // Consume the non-integer input
+            }
+            choice = scanner.nextInt();
+            switch (choice) {
+                case 1:
+                    fastTravel();
+                    break;
+                case 2:
+                    levelUp();
+                    break;
+                case 3:
+                    openInventory();
+                    break;
+                case 4:
+                    openShop();
+                    break;
+                case 5:
+                    quitGame();
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+        } while (choice != 5); // Exit loop when user chooses to quit
     }
 
     public void fastTravel() {
@@ -55,7 +90,4 @@ public class GameLobby {
         TitleScreen titleScreen = new TitleScreen();
         titleScreen.showTitleScreen();
     }
-    
 }
-
-
