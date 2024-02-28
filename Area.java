@@ -51,7 +51,8 @@ public class Area {
         // Implement other spawn tiles
         // Floor 3
         floor3[2][6].setDoor(true); // Door tile to floor 2
-        floor3[3][3].setBoss(true); // Boss tile
+        floor3[2][3].setBoss(true); // Boss tile
+        floor3[3][0].setFastTravel(true); // fast travel tile
     }
 
     public void play() {
@@ -72,8 +73,10 @@ public class Area {
             for (int j = 0; j < currentFloorTiles[0].length; j++) {
                 if (i == playerX && j == playerY) {
                     System.out.print(" P ");
+                } else if (currentFloorTiles[i][j].isOccupied()) {
+                    System.out.print("[ ]");
                 } else {
-                    System.out.print(" . ");
+                    System.out.print("   ");
                 }
             }
             System.out.println();
@@ -235,4 +238,3 @@ class Tile {
         this.boss = boss;
     }
 }
-
