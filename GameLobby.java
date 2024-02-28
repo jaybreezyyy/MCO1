@@ -20,7 +20,7 @@ public class GameLobby {
         System.out.println("[3] INVENTORY");
         System.out.println("[4] SHOP");
         System.out.println("[5] QUIT GAME");
-        
+
         // Show character details
         System.out.println("DETAILS:");
         System.out.println("Name: " + playerName);
@@ -28,7 +28,7 @@ public class GameLobby {
         System.out.println("Level: " + level);
         System.out.println("Runes: " + runes);
         System.out.println("System Messages: ");
-        
+
         // Start the game lobby loop
         startGameLoop();
     }
@@ -43,6 +43,7 @@ public class GameLobby {
                 scanner.next(); // Consume the non-integer input
             }
             choice = scanner.nextInt();
+            scanner.nextLine(); // Consume the newline character
             switch (choice) {
                 case 1:
                     fastTravel();
@@ -66,8 +67,32 @@ public class GameLobby {
     }
 
     public void fastTravel() {
-        // Implementation for fast travel
-        System.out.println("Implementing fast travel feature...");
+        System.out.println("Select destination:");
+        System.out.println("[1] Stormveil Castle");
+        System.out.println("[2] Raya Lucaria Academy [LOCKED]");
+        System.out.println("[3] The Elden Throne [LOCKED]");
+
+        Scanner scanner = new Scanner(System.in);
+        int destination = scanner.nextInt();
+        scanner.nextLine(); // Consume the newline character
+
+        switch (destination) {
+            case 1:
+                System.out.println("Fast traveling to Stormveil Castle...");
+                break;
+            case 2:
+                System.out.println("Raya Lucaria Academy is currently locked.");
+                break;
+            case 3:
+                System.out.println("The Elden Throne is currently locked.");
+                break;
+            default:
+                System.out.println("Invalid destination. Please try again.");
+        }
+
+        // Call the next Java code, Area.java, to continue the game
+        Area area = new Area();
+        area.play();
     }
 
     public void levelUp() {
