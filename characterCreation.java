@@ -11,43 +11,55 @@ public class CharacterCreation {
     private int fth;
 
     public void createCharacter() {
-        System.out.println("Character Creation");
-
         Scanner scanner = new Scanner(System.in);
+        int choice = 0;
+        do {
+            System.out.println("Character Creation");
+            System.out.println("[1] Input Name");
+            System.out.println("[2] Select Job Class");
+            System.out.println("[3] Confirm");
+            System.out.println("[4] Back");
+            while (!scanner.hasNextInt()) {
+                System.out.println("Invalid input. Please enter a number between 1 and 4.");
+                scanner.next(); // Consume the non-integer input
+            }
+            choice = scanner.nextInt();
+            switch (choice) {
+                case 1:
+                    inputName(scanner);
+                    break;
+                case 2:
+                    selectJobClass(scanner);
+                    break;
+                case 3:
+                    if (name != null && jobClass != null) {
+                        System.out.println("Confirming character creation...");
+                        printCharacterDetails();
+                        // After confirming character creation, proceed to the GameLobby
+                        GameLobby gameLobby = new GameLobby(name, jobClass, 1, 0); // Assuming initial level is 1 and initial runes is 0
+                        gameLobby.showGameLobby();
+                        return; // Exit the method after transitioning to the GameLobby
+                    } else {
+                        System.out.println("Please input name and select job class before confirming.");
+                    }
+                    break;
+                case 4:
+                    TitleScreen titleScreen = new TitleScreen();
+                    titleScreen.showTitleScreen();
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+        } while (choice != 3); // Assuming option 3 confirms and proceeds to the next step
+    }
 
-        System.out.println("[1] Input Name");
-        System.out.println("[2] Select Job Class");
-        System.out.println("[3] Confirm");
-        System.out.println("[4] Back");
-
-        int choice = scanner.nextInt();
-        switch (choice) {
-            case 1:
-                System.out.println("Enter your name:");
-                name = scanner.next();
-                createCharacter(); // After inputting the name, continue with the character creation process
-                break;
-            case 2:
-                selectJobClass(scanner);
-                break;
-            case 3:
-                if (name != null && jobClass != null) {
-                    System.out.println("Confirming character creation...");
-                    // Handle confirmation
-                    printCharacterDetails();
-                } else {
-                    System.out.println("Please input name and select job class before confirming.");
-                    createCharacter(); // Go back to character creation
-                }
-                break;
-            case 4:
-                TitleScreen titleScreen = new TitleScreen();
-                titleScreen.showTitleScreen();
-                break;
-            default:
-                System.out.println("Invalid choice. Please try again.");
-                createCharacter();
+    private void inputName(Scanner scanner) {
+        System.out.println("Enter your name (Maximum 25 characters):");
+        String inputName = scanner.next();
+        if (inputName.length() > 25) {
+            inputName = inputName.substring(0, 25); // Truncate to 25 characters
         }
+        name = inputName;
     }
 
     private void selectJobClass(Scanner scanner) {
@@ -87,7 +99,6 @@ public class CharacterCreation {
                 break;
             default:
                 System.out.println("Invalid choice. Please try again.");
-                selectJobClass(scanner);
         }
         System.out.println("Selected job class: " + jobClass);
     }
