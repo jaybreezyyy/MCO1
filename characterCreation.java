@@ -24,6 +24,7 @@ public class CharacterCreation {
                 scanner.next(); // Consume the non-integer input
             }
             choice = scanner.nextInt();
+            scanner.nextLine(); // Added to consume the newline character
             switch (choice) {
                 case 1:
                     inputName(scanner);
@@ -32,10 +33,9 @@ public class CharacterCreation {
                     selectJobClass(scanner);
                     break;
                 case 3:
-                    if (name != null && jobClass != null) {
+                    if (name != null && !name.isEmpty() && jobClass != null && !jobClass.isEmpty()) {
                         System.out.println("Confirming character creation...");
                         printCharacterDetails();
-                        // After confirming character creation, proceed to the GameLobby
                         GameLobby gameLobby = new GameLobby(name, jobClass, 1, 0); // Assuming initial level is 1 and initial runes is 0
                         gameLobby.showGameLobby();
                         return; // Exit the method after transitioning to the GameLobby
@@ -44,18 +44,20 @@ public class CharacterCreation {
                     }
                     break;
                 case 4:
+                    // Assuming TitleScreen class has a method to show itself
                     TitleScreen titleScreen = new TitleScreen();
                     titleScreen.showTitleScreen();
-                    break;
+                    return; // Exit the character creation process
                 default:
                     System.out.println("Invalid choice. Please try again.");
+                    break;
             }
-        } while (choice != 3); // Assuming option 3 confirms and proceeds to the next step
+        } while (true); // Changed to ensure the loop only exits on explicit conditions
     }
 
     private void inputName(Scanner scanner) {
         System.out.println("Enter your name (Maximum 25 characters):");
-        String inputName = scanner.next();
+        String inputName = scanner.nextLine(); // Changed to nextLine to allow spaces in names
         if (inputName.length() > 25) {
             inputName = inputName.substring(0, 25); // Truncate to 25 characters
         }
