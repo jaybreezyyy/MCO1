@@ -154,7 +154,7 @@ public class Area {
             // Implement fast travel tile behavior
         } else if (currentTile.isDoor()) {
             System.out.println("You've encountered a door tile!");
-            currentFloor += 1;
+            
             
             // Implement door tile behavior
         }
