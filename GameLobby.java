@@ -14,21 +14,6 @@ public class GameLobby {
     }
 
     public void showGameLobby() {
-        System.out.println("GAME LOBBY");
-        System.out.println("[1] FAST TRAVEL");
-        System.out.println("[2] LEVEL UP");
-        System.out.println("[3] INVENTORY");
-        System.out.println("[4] SHOP");
-        System.out.println("[5] QUIT GAME");
-
-        // Show character details
-        System.out.println("DETAILS:");
-        System.out.println("Name: " + playerName);
-        System.out.println("Job Class: " + jobClass);
-        System.out.println("Level: " + level);
-        System.out.println("Runes: " + runes);
-        System.out.println("System Messages: ");
-
         // Start the game lobby loop
         startGameLoop();
     }
@@ -37,10 +22,26 @@ public class GameLobby {
         Scanner scanner = new Scanner(System.in);
         int choice = 0;
         do {
+            System.out.println("GAME LOBBY");
+            System.out.println("[1] FAST TRAVEL");
+            System.out.println("[2] LEVEL UP");
+            System.out.println("[3] INVENTORY");
+            System.out.println("[4] SHOP");
+            System.out.println("[5] QUIT GAME");
+    
+            // Show character details
+            System.out.println("DETAILS:");
+            System.out.println("Name: " + playerName);
+            System.out.println("Job Class: " + jobClass);
+            System.out.println("Level: " + level);
+            System.out.println("Runes: " + runes);
+            System.out.println("System Messages: ");
             System.out.println("Enter your choice:");
+
             while (!scanner.hasNextInt()) {
                 System.out.println("Invalid input. Please enter a number between 1 and 5.");
-                scanner.next(); // Consume the non-integer input
+                scanner.next();
+                 // Consume the non-integer input
             }
             choice = scanner.nextInt();
             scanner.nextLine(); // Consume the newline character
