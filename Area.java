@@ -19,13 +19,13 @@ public class Area {
 
     private void initializeFloors() {
         // Initialize floor 1
-        floor1 = new Tile[3][7];
+        floor1 = new Tile[7][3];
         initializeFloor(floor1);
         // Initialize floor 2
         floor2 = new Tile[7][7];
         initializeFloor(floor2);
         // Initialize floor 3
-        floor3 = new Tile[5][7];
+        floor3 = new Tile[7][5];
         initializeFloor(floor3);
         // Set up special tiles
         setupSpecialTiles();
@@ -41,18 +41,27 @@ public class Area {
 
     private void setupSpecialTiles() {
         // Floor 1
-        floor1[1][6].setFastTravel(true); // Fast travel tile
-        floor1[0][1].setSpawn(true); // Spawn tile
-        floor1[2][1].setSpawn(true); // Spawn tile
-        floor1[1][0].setDoor(true); // Door tile to floor 2
+        floor1[6][1].setFastTravel(true); // Fast travel tile
+        floor1[1][0].setSpawn(true); // Spawn tile
+        floor1[1][2].setSpawn(true); // Spawn tile
+        floor1[1][0].setAscendingDoor(true);; // Door tile to floor 2
         // Floor 2
-        floor2[3][6].setDoor(true); // Door tile to floor 1
-        floor2[3][1].setSpawn(true); // Spawn tile
+        floor2[3][6].setDescendingDoor(true);; // Door tile to floor 1
+        floor2[1][3].setSpawn(true); // Spawn tile
+        floor2[1][3].setSpawn(true); //Spawn tile
+        floor2[3][0].setSpawn(true); //Spawn tile
+        floor2[3][2].setSpawn(true); //Spawn tile
+        floor2[3][3].setSpawn(true); //Spawn tile
+        floor2[3][4].setSpawn(true); //Spawn tile
+        floor2[3][6].setSpawn(true); //Spawn tile
+        floor2[5][2].setSpawn(true); //Spawn tile
+        floor2[5][4].setSpawn(true); //Spawn tile
+        floor2[3][0].setAscendingDoor(true); //Door tile to floor 3
         // Implement other spawn tiles
         // Floor 3
-        floor3[2][6].setDoor(true); // Door tile to floor 2
-        floor3[2][3].setBoss(true); // Boss tile
-        floor3[3][0].setFastTravel(true); // fast travel tile
+        floor3[6][2].setDescendingDoor(true); // Door tile to floor 2
+        floor3[3][2].setBoss(true); // Boss tile
+        floor3[0][3].setFastTravel(true); // fast travel tile
     }
 
     public void play() {
@@ -69,10 +78,10 @@ public class Area {
 
     private void displayArea() {
         Tile[][] currentFloorTiles = getCurrentFloor();
-        for (int i = 0; i < currentFloorTiles.length; i++) {
-            for (int j = 0; j < currentFloorTiles[0].length; j++) {
+        for (int i = 0; i < currentFloorTiles[0].length; i++) {
+            for (int j = 0; j < currentFloorTiles.length; j++) {
                 if (i == playerX && j == playerY) {
-                    System.out.print(" P1 ");
+                    System.out.print(" P ");
                 } else if (currentFloorTiles[i][j].isOccupied()) {
                     System.out.print("[ ]");
                 } else {
@@ -145,6 +154,8 @@ public class Area {
             // Implement fast travel tile behavior
         } else if (currentTile.isDoor()) {
             System.out.println("You've encountered a door tile!");
+            currentFloor += 1;
+            
             // Implement door tile behavior
         }
     }
@@ -170,6 +181,11 @@ public class Area {
                 return null; // Invalid floor
         }
     }
+
+    private void ifDoorTile(){
+
+    }
+    
 
     public static void main(String[] args) {
         Area area = new Area();
@@ -225,8 +241,16 @@ class Tile {
     public boolean isDoor() {
         return door;
     }
-
+    
     public void setDoor(boolean door) {
+        this.door = door;
+    }
+
+    public void setAscendingDoor(boolean door){
+        this.door = door;
+    }
+
+    public void setDescendingDoor(boolean door){
         this.door = door;
     }
 
