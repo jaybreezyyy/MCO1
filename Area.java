@@ -69,8 +69,8 @@ public class Area {
 
     private void displayArea() {
         Tile[][] currentFloorTiles = getCurrentFloor();
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 7; j++) {
+        for (int i = 0; i < currentFloorTiles.length; i++) {
+            for (int j = 0; j < currentFloorTiles[0].length; j++) {
                 if (i == playerX && j == playerY) {
                     System.out.print(" P1 ");
                 } else if (currentFloorTiles[i][j].isOccupied()) {
