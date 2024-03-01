@@ -5,30 +5,17 @@ public class GameLobby {
     private String jobClass;
     private int level;
     private int runes;
+    private CharacterCreation character;
 
-    public GameLobby(String playerName, String jobClass, int level, int runes) {
+    public GameLobby(String playerName, String jobClass, int level, int runes, CharacterCreation character) {
         this.playerName = playerName;
         this.jobClass = jobClass;
         this.level = level;
         this.runes = runes;
+        this.character = character;
     }
 
     public void showGameLobby() {
-        System.out.println("GAME LOBBY");
-        System.out.println("[1] FAST TRAVEL");
-        System.out.println("[2] LEVEL UP");
-        System.out.println("[3] INVENTORY");
-        System.out.println("[4] SHOP");
-        System.out.println("[5] QUIT GAME");
-
-        // Show character details
-        System.out.println("DETAILS:");
-        System.out.println("Name: " + playerName);
-        System.out.println("Job Class: " + jobClass);
-        System.out.println("Level: " + level);
-        System.out.println("Runes: " + runes);
-        System.out.println("System Messages: ");
-
         // Start the game lobby loop
         startGameLoop();
     }
@@ -37,11 +24,32 @@ public class GameLobby {
         Scanner scanner = new Scanner(System.in);
         int choice = 0;
         do {
+            System.out.println("GAME LOBBY");
+            System.out.println("[1] FAST TRAVEL");
+            System.out.println("[2] LEVEL UP");
+            System.out.println("[3] INVENTORY");
+            System.out.println("[4] SHOP");
+            System.out.println("[5] QUIT GAME");
+            
+            // Show character details
+            System.out.println("DETAILS:");
+            System.out.println("Name: " + playerName);
+            System.out.println("Job Class: " + jobClass);
+            System.out.println("Level: " + level);
+            System.out.println("Runes: " + runes);
+            System.out.println("System Messages: ");
             System.out.println("Enter your choice:");
+            
+            /* 
             while (!scanner.hasNextInt()) {
                 System.out.println("Invalid input. Please enter a number between 1 and 5.");
-                scanner.next(); // Consume the non-integer input
+                if(hasJustExitedMap)
+                    hasJustExitedMap = false;
+                else
+                    scanner.next();
+                 // Consume the non-integer input
             }
+            */
             choice = scanner.nextInt();
             scanner.nextLine(); // Consume the newline character
             switch (choice) {
@@ -61,9 +69,9 @@ public class GameLobby {
                     quitGame();
                     break;
                 default:
-                    System.out.println("Invalid choice. Please try again.");
+                    System.out.println("Invalid input. Please enter a number between 1 and 5.");
             }
-        } while (choice != 5); // Exit loop when user chooses to quit
+        } while (choice != 5); // Exit loop when user chooses to quitq
     }
 
     public void fastTravel() {
@@ -97,7 +105,289 @@ public class GameLobby {
 
     public void levelUp() {
         // Implementation for level up
-        System.out.println("Implementing level up feature...");
+        Scanner scanner = new Scanner(System.in);
+        int choice = 0;
+        boolean isRunning = true;
+        boolean innerLoop;
+        while(isRunning)
+        {
+            System.out.println("LEVEL UP");
+            System.out.println("[1] Level Health");
+            System.out.println("[2] Level Endurance");
+            System.out.println("[3] Level Dexterity");
+            System.out.println("[4] Level Strength");
+            System.out.println("[5] Level Intelligence");
+            System.out.println("[6] Level Faith");
+            System.out.println("[7] Add Runes");
+            System.out.println("[8] Back");
+
+            System.out.println("DETAILS");
+            System.out.println("Level: " + String.valueOf(level));
+            System.out.println("Rune Cost: " + String.valueOf((level * 100) / 2));
+            System.out.println("Runes: " + String.valueOf(character.getRuneCount()));
+            System.out.println("Health: " + String.valueOf(character.getHealth()));
+            System.out.println("Endurance: " + String.valueOf(character.getEndurance()));
+            System.out.println("Dexterity: " + String.valueOf(character.getDexterity()));
+            System.out.println("Strength: " + String.valueOf(character.getStrength()));
+            System.out.println("Intelligence: " + String.valueOf(character.getIntelligence()));
+            System.out.println("Faith: " + String.valueOf(character.getFaith()));
+            System.out.println("System Messages: ");
+            
+            System.out.println("Enter your choice: ");
+            choice = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (choice) {
+                case 1:
+                    innerLoop = true;
+                    while(innerLoop)
+                    {
+                        System.out.println("LEVEL HEALTH");
+                        System.out.println("[1] Add Level to Health");
+                        System.out.println("[2] Back");
+
+                        System.out.println("Level: " + String.valueOf(level));
+                        System.out.println("Health: " + String.valueOf(character.getHealth()));
+                        System.out.println("Rune Cost: " + String.valueOf((level * 100) / 2));
+                        System.out.println("Runes: " + String.valueOf(character.getRuneCount()));
+                        
+                        choice = scanner.nextInt();
+                        scanner.nextLine();
+                        switch(choice)
+                        {
+                            case 1:
+                                if(character.getRuneCount() >= (level * 100) / 2)
+                                {
+                                    character.subtractRuneCount((level * 100) / 2);
+                                    character.setHealth(1);
+                                    level += 1;
+                                    System.out.println("Your Health is now " + String.valueOf(character.getHealth() + "!"));
+                                    System.out.println("You are now level " + String.valueOf(level) + "!");
+                                }
+                                else
+                                    System.out.println("Insufficient RUNES :(");
+                                break;
+                            case 2:
+                                System.out.println("Exiting this menu.");
+                                innerLoop = false;
+                                break;
+                            default:
+                                System.out.println("Invalid input.");
+                                break;
+                        }
+                    }
+                    break;
+                case 2:
+                    innerLoop = true;
+                    while(innerLoop)
+                    {
+                        System.out.println("LEVEL ENDURANCE");
+                        System.out.println("[1] Add Level Endurance");
+                        System.out.println("[2] Back");
+
+                        System.out.println("Level: " + String.valueOf(level));
+                        System.out.println("Endurance: " + String.valueOf(character.getEndurance()));
+                        System.out.println("Rune Cost: " + String.valueOf((level * 100) / 2));
+                        System.out.println("Runes: " + String.valueOf(character.getRuneCount()));
+                    
+                        choice = scanner.nextInt();
+                        scanner.nextLine();
+                        switch(choice)
+                        {
+                            case 1:
+                                if(character.getRuneCount() >= (level * 100) / 2)
+                                {
+                                    character.subtractRuneCount((level * 100) / 2);
+                                    character.setEndurance(1);
+                                    level += 1;
+                                    System.out.println("Your Health is now " + String.valueOf(character.getEndurance() + "!"));
+                                    System.out.println("You are now level " + String.valueOf(level) + "!");
+                                }
+                                else
+                                    System.out.println("Insufficient RUNES :(");
+                                break;
+                            case 2:
+                                System.out.println("Exiting this menu.");
+                                innerLoop = false;
+                                break;
+                            default:
+                                System.out.println("Invalid input.");
+                                break;
+                        }
+                    }
+                    break;
+                case 3:
+                    innerLoop = true;
+                    while(innerLoop)
+                    {
+                        System.out.println("LEVEL DEXTERITY");
+                        System.out.println("[1] Add Level Dexterity");
+                        System.out.println("[2] Back");
+
+                        System.out.println("Level: " + String.valueOf(level));
+                        System.out.println("Dexterity: " + String.valueOf(character.getDexterity()));
+                        System.out.println("Rune Cost: " + String.valueOf((level * 100) / 2));
+                        System.out.println("Runes: " + String.valueOf(character.getRuneCount()));
+                    
+                        choice = scanner.nextInt();
+                        scanner.nextLine();
+                        switch(choice)
+                        {
+                            case 1:
+                                if(character.getRuneCount() >= (level * 100) / 2)
+                                {
+                                    character.subtractRuneCount((level * 100) / 2);
+                                    character.setDexterity(1);
+                                    level += 1;
+                                    System.out.println("Your Dexterity is now " + String.valueOf(character.getDexterity() + "!"));
+                                    System.out.println("You are now level " + String.valueOf(level) + "!");
+                                }
+                                else
+                                    System.out.println("Insufficient RUNES :(");
+                                break;
+                            case 2:
+                                System.out.println("Exiting this menu.");
+                                innerLoop = false;
+                                break;
+                            default:
+                                System.out.println("Invalid input.");
+                                break;
+                        }
+                    }
+                    break;
+                case 4:
+                    innerLoop = true;
+                    while(innerLoop)
+                    {
+                        System.out.println("LEVEL STRENGTH");
+                        System.out.println("[1] Add Level Strength");
+                        System.out.println("[2] Back");
+
+                        System.out.println("Level: " + String.valueOf(level));
+                        System.out.println("Strength: " + String.valueOf(character.getStrength()));
+                        System.out.println("Rune Cost: " + String.valueOf((level * 100) / 2));
+                        System.out.println("Runes: " + String.valueOf(character.getRuneCount()));
+                    
+                        choice = scanner.nextInt();
+                        scanner.nextLine();
+                        switch(choice)
+                        {
+                            case 1:
+                                if(character.getRuneCount() >= (level * 100) / 2)
+                                {
+                                    character.subtractRuneCount((level * 100) / 2);
+                                    character.setStrength(1);
+                                    level += 1;
+                                    System.out.println("Your Strength is now " + String.valueOf(character.getStrength() + "!"));
+                                    System.out.println("You are now level " + String.valueOf(level) + "!");
+                                }
+                                else
+                                    System.out.println("Insufficient RUNES :(");
+                                break;
+                            case 2:
+                                System.out.println("Exiting this menu.");
+                                innerLoop = false;
+                                break;
+                            default:
+                                System.out.println("Invalid input.");
+                                break;
+                        }
+                    }
+                    break;
+                case 5:
+                innerLoop = true;
+                while(innerLoop)
+                {
+                    System.out.println("LEVEL INTELLIGENCE");
+                    System.out.println("[1] Add Level Intelligence");
+                    System.out.println("[2] Back");
+
+                    System.out.println("Level: " + String.valueOf(level));
+                    System.out.println("Endurance: " + String.valueOf(character.getIntelligence()));
+                    System.out.println("Rune Cost: " + String.valueOf((level * 100) / 2));
+                    System.out.println("Runes: " + String.valueOf(character.getRuneCount()));
+                    
+                    choice = scanner.nextInt();
+                    scanner.nextLine();
+                    switch(choice)
+                    {
+                        case 1:
+                            if(character.getRuneCount() >= (level * 100) / 2)
+                            {
+                                character.subtractRuneCount((level * 100) / 2);
+                                character.setIntelligence(1);
+                                level += 1;
+                                System.out.println("Your Intelligence is now " + String.valueOf(character.getIntelligence() + "!"));
+                                System.out.println("You are now level " + String.valueOf(level) + "!");
+                            }
+                            else
+                                System.out.println("Insufficient RUNES :(");
+                            break;
+                        case 2:
+                            System.out.println("Exiting this menu.");
+                            innerLoop = false;
+                            break;
+                        default:
+                            System.out.println("Invalid input.");
+                            break;
+                    }
+                }
+                break;
+                case 6:
+                innerLoop = true;
+                    while(innerLoop)
+                    {
+                        System.out.println("LEVEL FAITH");
+                        System.out.println("[1] Add Level to Faith");
+                        System.out.println("[2] Back");
+
+                        System.out.println("Level: " + String.valueOf(level));
+                        System.out.println("Faith: " + String.valueOf(character.getFaith()));
+                        System.out.println("Rune Cost: " + String.valueOf((level * 100) / 2));
+                        System.out.println("Runes: " + String.valueOf(character.getRuneCount()));
+                        
+                        choice = scanner.nextInt();
+                        scanner.nextLine();
+                        switch(choice)
+                        {
+                            case 1:
+                                if(character.getRuneCount() >= (level * 100) / 2)
+                                {
+                                    character.subtractRuneCount((level * 100) / 2);
+                                    character.setFaith(1);
+                                    level += 1;
+                                    System.out.println("Your Faith is now " + String.valueOf(character.getFaith() + "!"));
+                                    System.out.println("You are now level " + String.valueOf(level) + "!");
+                                }
+                                else
+                                    System.out.println("Insufficient RUNES :(");
+                                break;
+                            case 2:
+                                System.out.println("Exiting this menu.");
+                                innerLoop = false;
+                                break;
+                            default:
+                                System.out.println("Invalid input.");
+                                break;
+                        }
+                    }
+                    break;
+                case 7:
+                    System.out.println("ADD RUNES");
+                    System.out.println("Enter amount of runes to add: ");
+                    int amount = scanner.nextInt();
+                    scanner.nextLine();
+                    character.setRuneCount(amount);
+                    break;
+                case 8:
+                    System.out.println("Exiting this menu.");
+                    isRunning = false;
+                    break;
+                default:
+                    System.out.println("Invalid input. Please enter a number between 1 and 8.");
+                    break;
+            }
+        }
     }
 
     public void openInventory() {
