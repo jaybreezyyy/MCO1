@@ -142,7 +142,7 @@ public class Area {
                 movePlayer(0, 1);
                 break;
             case 'E':
-                interact();
+                checkSpecialTile();
                 break;
             case 'Q':
                 quitGame();
@@ -160,7 +160,9 @@ public class Area {
             playerX = newX;
             playerY = newY;
             System.out.println("Moved to: (" + playerX + ", " + playerY + ")");
-            checkSpecialTile();
+            Tile currentTile = getCurrentFloor()[playerX][playerY];
+            if(currentTile.isBoss() || currentTile.isDoor() || currentTile.isSpawn() || currentTile.isFastTravel())
+                System.out.println("You have stepped on a special tile! Press E to interact with it.");
         } else {
             System.out.println("Cannot move there.");
         }
