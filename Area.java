@@ -12,8 +12,9 @@ public class Area {
     private Random random;
     private boolean interacted;
     private boolean leaveFloor;
+    private CharacterCreation character;
 
-    public Area() {
+    public Area(CharacterCreation character) {
         initializeFloors();
         playerX = 6; // Initial player position
         playerY = 1; // Initial player position
@@ -22,6 +23,7 @@ public class Area {
         random = new Random();
         interacted = false;
         leaveFloor = false;
+        this.character = character;
     }
 
     private void initializeFloors() {
@@ -94,38 +96,33 @@ public class Area {
     private void displayArea() {
         Tile[][] currentFloorTiles = getCurrentFloor();
         for (int i = 0; i < currentFloorTiles.length; i++) {
-            // Draw the upper part of each tileW
             for (int j = 0; j < currentFloorTiles[i].length; j++) {
                 System.out.print(" __________ ");
             }
             System.out.println();
-
-            // Draw the middle part of each tile
             for (int j = 0; j < currentFloorTiles[i].length; j++) {
                 if (i == playerX && j == playerY) {
                     System.out.print("|    P     |");
-                } else if (currentFloorTiles[i][j].isSpawn()) {
-                    System.out.print("|    S     |"); // Spawn tile
+                } else if (currentFloorTiles[i][j].isSpawn() && !currentFloorTiles[i][j].isInteracted()) {
+                    System.out.print("|    S     |"); // Show "S" only if not interacted
                 } else if (currentFloorTiles[i][j].isDoor()) {
-                    System.out.print("|    D     |"); // Door tile
-                } else if(currentFloorTiles[i][j].isBoss()){
-                    System.out.print("|    B     |"); //Boss tile
-                } else if(currentFloorTiles[i][j].isFastTravel()){
-                    System.out.print("|    F     |");   //Fast Travel
-                }
-                else {
-                    System.out.print("|          |"); // Empty tile
+                    System.out.print("|    D     |");
+                } else if (currentFloorTiles[i][j].isBoss()) {
+                    System.out.print("|    B     |");
+                } else if (currentFloorTiles[i][j].isFastTravel()) {
+                    System.out.print("|    F     |");
+                } else {
+                    System.out.print("|          |");
                 }
             }
             System.out.println();
-
-            // Draw the lower part of each tile
             for (int j = 0; j < currentFloorTiles[i].length; j++) {
                 System.out.print("|__________|");
             }
             System.out.println();
         }
     }
+    
 
     private boolean interactWithTile(char action) {
         switch (action) {
@@ -213,17 +210,22 @@ public class Area {
     }
 
     private void interactWithSpawnTile() {
-        // 75% chance to encounter a Monster, and 25% chance to encounter a Rune
+        Tile currentTile = getCurrentFloor()[playerX][playerY];
         int chance = random.nextInt(100) + 1;
+        int runeMin = 50;
+        int runeMax = 150;
+        int randomRune = (int)Math.floor(Math.random() * (runeMax - runeMin + 1) + runeMin); //Generates a random number from 50 - 150 for rune tiles
         if (chance <= 75) {
             System.out.println("You've encountered a Monster!");
-            // Implement encounter with a Monster
         } else {
             System.out.println("You've encountered a Rune!");
-            // Implement encounter with a Rune
+            System.out.println("You've obtained " + randomRune + " Runes");
+            character.setRuneCount(randomRune);
         }
+        currentTile.setInteracted(true); // Mark the tile as interacted
+        currentTile.disableSpawn(); // Disable spawn functionality
     }
-
+    
     private void quitGame() {
         System.out.println("Quitting game...");
         // Implement quitting game, perhaps return to main menu or exit
@@ -248,6 +250,7 @@ public class Area {
 class Tile {
     private boolean occupied;
     private boolean spawn;
+    private boolean interacted; // Added flag to track interaction
     private boolean door;
     private boolean boss;
     private boolean fastTravel;
@@ -257,12 +260,14 @@ class Tile {
     public Tile() {
         this.occupied = false;
         this.spawn = false;
+        this.interacted = false; // Initialize as not interacted
         this.door = false;
         this.boss = false;
         this.fastTravel = false;
         this.ascendingDoor = false;
         this.descendingDoor = false;
     }
+
 
     public boolean isOccupied() {
         return occupied;
@@ -274,6 +279,18 @@ class Tile {
 
     public boolean isSpawn() {
         return spawn;
+    }
+
+    public boolean isInteracted() {
+        return interacted;
+    }
+
+    public void setInteracted(boolean interacted) {
+        this.interacted = interacted;
+    }
+
+    public void disableSpawn() {
+        this.spawn = false; // Disable spawn functionality
     }
 
     public void setSpawn(boolean spawn) {

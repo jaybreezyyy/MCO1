@@ -9,6 +9,7 @@ public class CharacterCreation {
     private int str;
     private int intell;
     private int fth;
+    private int runeCount = 0;
 
     public void createCharacter() {
         Scanner scanner = new Scanner(System.in);
@@ -36,7 +37,7 @@ public class CharacterCreation {
                     if (name != null && !name.isEmpty() && jobClass != null && !jobClass.isEmpty()) {
                         System.out.println("Confirming character creation...");
                         printCharacterDetails();
-                        GameLobby gameLobby = new GameLobby(name, jobClass, 1, 0); // Assuming initial level is 1 and initial runes is 0
+                        GameLobby gameLobby = new GameLobby(name, jobClass, 1, 0, this); // Assuming initial level is 1 and initial runes is 0
                         gameLobby.showGameLobby();
                         return; // Exit the method after transitioning to the GameLobby
                     } else {
@@ -114,6 +115,60 @@ public class CharacterCreation {
         this.fth = fth;
     }
 
+    public void setHealth(int amount) {
+        this.hp += amount;
+    }
+
+    public void setEndurance(int amount) {
+        this.end += amount;
+    }
+
+    public void setDexterity(int amount) {
+        this.dex += amount;
+    }
+    
+    public void setStrength(int amount) {
+        this.str += amount;
+    }
+
+    public void setIntelligence(int amount) {
+        this.intell += amount;
+    }
+
+    public void setFaith(int amount) {
+        this.fth += amount;
+    }
+
+    public int getHealth()
+    {
+        return this.hp;
+    }
+
+    public int getEndurance()
+    {
+        return this.end;
+    }
+
+    public int getDexterity()
+    {
+        return this.dex;
+    }
+
+    public int getStrength()
+    {
+        return this.str;
+    }
+
+    public int getIntelligence()
+    {
+        return this.intell;
+    }
+
+    public int getFaith()
+    {
+        return this.fth;
+    }
+
     private void printCharacterDetails() {
         System.out.println("Character Details:");
         System.out.println("Name: " + name);
@@ -124,5 +179,17 @@ public class CharacterCreation {
         System.out.println("Strength: " + str);
         System.out.println("Intelligence: " + intell);
         System.out.println("Faith: " + fth);
+    }
+
+    public int getRuneCount() {
+        return this.runeCount;
+    }
+
+    public void setRuneCount(int amount) {
+        this.runeCount += amount;
+    }
+
+    public void subtractRuneCount(int amount) {
+        this.runeCount -= amount;
     }
 }
