@@ -20,6 +20,7 @@ public class CharacterCreation {
             System.out.println("[2] Select Job Class");
             System.out.println("[3] Confirm");
             System.out.println("[4] Back");
+            System.out.print("Your Choice: ");
             while (!scanner.hasNextInt()) {
                 System.out.println("Invalid input. Please enter a number between 1 and 4.");
                 scanner.next(); // Consume the non-integer input
@@ -67,13 +68,18 @@ public class CharacterCreation {
 
     private void selectJobClass(Scanner scanner) {
         System.out.println("Select your job class:");
-        System.out.println("[1] Vagabond");
-        System.out.println("[2] Samurai");
-        System.out.println("[3] Warrior");
-        System.out.println("[4] Hero");
-        System.out.println("[5] Astrologer");
-        System.out.println("[6] Prophet");
-
+        System.out.println("_____________________________________________________________________________________________");
+        System.out.println("| Option |   Job Class  |  HP  |  Endurance | Dexterity |  Strength  | Intelligence | Faith |");
+        System.out.println("|-------------------------------------------------------------------------------------------|");
+        System.out.println("|   [1]  |   Vagabond   |  15  |     11     |    13     |     14     |      9       |   9   |");
+        System.out.println("|   [2]  |   Samurai    |  12  |     13     |    15     |     12     |      9       |   8   |");
+        System.out.println("|   [3]  |   Warrior    |  11  |     15     |    16     |     10     |     10       |   8   |");
+        System.out.println("|   [4]  |   Hero       |  14  |     12     |    9      |     16     |      7       |   8   |");
+        System.out.println("|   [5]  |   Astrologer |  9   |     9      |    12     |     8      |     16       |   7   |");
+        System.out.println("|   [6]  |   Prophet    |  10  |     8      |    10     |     11     |      7       |  16   |");
+        System.out.println("|___________________________________________________________________________________________|");
+        System.out.print("Your Option: ");
+    
         int jobChoice = scanner.nextInt();
         switch (jobChoice) {
             case 1:
@@ -105,6 +111,7 @@ public class CharacterCreation {
         }
         System.out.println("Selected job class: " + jobClass);
     }
+    
 
     private void setJobStats(int hp, int end, int dex, int str, int intell, int fth) {
         this.hp = hp;
