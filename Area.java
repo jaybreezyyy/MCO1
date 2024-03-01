@@ -64,7 +64,8 @@ public class Area {
         floor1[1][2].setSpawn(true); // Spawn tile
         floor1[0][1].setAscendingDoor(true); // Door tile to floor 2
         // Floor 2
-        floor2[6][4].setDescendingDoor(true); // Door tile to floor 1
+        floor2[6][3].setDescendingDoor(true); // Door tile to floor 1
+        floor2[0][3].setAscendingDoor(true); // Door tile to floor 3
         floor2[1][3].setSpawn(true); // Spawn tile
         floor2[3][0].setSpawn(true); // Spawn tile
         floor2[3][2].setSpawn(true); // Spawn tile
@@ -73,7 +74,6 @@ public class Area {
         floor2[3][6].setSpawn(true); // Spawn tile
         floor2[5][2].setSpawn(true); // Spawn tile
         floor2[5][4].setSpawn(true); // Spawn tile
-        floor2[0][4].setAscendingDoor(true); // Door tile to floor 3
         // Floor 3
         floor3[6][2].setDescendingDoor(true); // Door tile to floor 2
         floor3[3][2].setBoss(true); // Boss tile
@@ -107,7 +107,7 @@ public class Area {
                     System.out.print("|    S     |"); // Show "S" only if not interacted
                 } else if (currentFloorTiles[i][j].isDoor()) {
                     System.out.print("|    D     |");
-                } else if (currentFloorTiles[i][j].isBoss()) {
+                } else if (currentFloorTiles[i][j].isBoss() && !bossDefeated && !currentFloorTiles[i][j].isBossInteracted()) {
                     System.out.print("|    B     |");
                 } else if (currentFloorTiles[i][j].isFastTravel()) {
                     System.out.print("|    F     |");
@@ -122,6 +122,7 @@ public class Area {
             System.out.println();
         }
     }
+    
     
 
     private boolean interactWithTile(char action) {
@@ -180,6 +181,9 @@ public class Area {
             if (!bossDefeated) {
                 System.out.println("You've encountered the boss!");
                 // Implement boss battle
+                bossDefeated = true; // Mark the boss as defeated
+                currentTile.setBossInteracted(true); // Mark the boss tile as interacted
+                currentTile.setBoss(false); // Remove the boss tile
             } else {
                 System.out.println("Boss already defeated. Tile has no effect.");
             }
@@ -187,20 +191,43 @@ public class Area {
             System.out.println("You've encountered a spawn tile!");
             interactWithSpawnTile();
         } else if (currentTile.isFastTravel()) {
-            System.out.println("You've encountered a fast travel tile!");
-            leaveFloor = true;
-            // Implement fast travel tile behavior
-        } else if (currentTile.isDoor()) {
-            System.out.println("You've encountered a door tile!");
-            if (currentFloor == 1) {
-                currentFloor = 2; // Move to floor 2
-                playerX = 6; // Reset player position
-                playerY = 3; // Reset player position
-            } else if (currentFloor == 2) {
-                currentFloor = 3; // Move to floor 3
-                playerX = 6; // Reset player position
-                playerY = 2; // Reset player position
+            if (currentFloor == 3 && !bossDefeated) {
+                System.out.println("Fast travel tile is locked until the boss is defeated.");
+            } else {
+                System.out.println("You've encountered a fast travel tile!");
+                leaveFloor = true;
+                // Implement fast travel tile behavior
             }
+        } else if (currentTile.isDoor()) {
+            if (currentTile.isAscendingDoor()) {
+                ascendFloor();
+            } else if (currentTile.isDescendingDoor()) {
+                descendFloor();
+            }
+        }
+    }
+
+    private void ascendFloor() {
+        if (currentFloor == 1) {
+            currentFloor = 2;
+            playerX = 6;
+            playerY = 3;
+        } else if (currentFloor == 2) {
+            currentFloor = 3;
+            playerX = 6; 
+            playerY = 2; 
+        }
+    }
+    
+    private void descendFloor() {
+        if (currentFloor == 2) {
+            currentFloor = 1;
+            playerX = 0;
+            playerY = 1;
+        } else if (currentFloor == 3) {
+            currentFloor = 2;
+            playerX = 0;
+            playerY = 3;
         }
     }
 
@@ -228,6 +255,8 @@ public class Area {
     
     private void quitGame() {
         System.out.println("Quitting game...");
+        TitleScreen titleScreen = new TitleScreen();
+        titleScreen.showTitleScreen();
         // Implement quitting game, perhaps return to main menu or exit
     }
 
@@ -251,21 +280,25 @@ class Tile {
     private boolean occupied;
     private boolean spawn;
     private boolean interacted; // Added flag to track interaction
+    private boolean bossInteracted; // Flag to track if the boss tile has been interacted with
     private boolean door;
     private boolean boss;
     private boolean fastTravel;
     private boolean ascendingDoor;
     private boolean descendingDoor;
+    
 
     public Tile() {
         this.occupied = false;
         this.spawn = false;
         this.interacted = false; // Initialize as not interacted
+        this.bossInteracted = false;
         this.door = false;
         this.boss = false;
         this.fastTravel = false;
         this.ascendingDoor = false;
         this.descendingDoor = false;
+
     }
 
 
@@ -283,6 +316,14 @@ class Tile {
 
     public boolean isInteracted() {
         return interacted;
+    }
+
+    public boolean isBossInteracted() {
+        return bossInteracted;
+    }
+
+    public void setBossInteracted(boolean bossInteracted) {
+        this.bossInteracted = bossInteracted;
     }
 
     public void setInteracted(boolean interacted) {
