@@ -20,6 +20,7 @@ public class TitleScreen {
         System.out.println("Welcome to Elden Rogue!");
         System.out.println("[1] START");
         System.out.println("[2] EXIT");
+        System.out.print("Your Choice: ");
 
         Scanner scanner = new Scanner(System.in);
         int choice = scanner.nextInt();
