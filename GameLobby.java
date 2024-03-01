@@ -24,13 +24,6 @@ public class GameLobby {
         Scanner scanner = new Scanner(System.in);
         int choice = 0;
         do {
-            System.out.println("GAME LOBBY");
-            System.out.println("[1] FAST TRAVEL");
-            System.out.println("[2] LEVEL UP");
-            System.out.println("[3] INVENTORY");
-            System.out.println("[4] SHOP");
-            System.out.println("[5] QUIT GAME");
-            
             // Show character details
             System.out.println("DETAILS:");
             System.out.println("Name: " + playerName);
@@ -39,7 +32,14 @@ public class GameLobby {
             System.out.println("Runes: " + character.getRuneCount());
             System.out.println("System Messages: ");
             System.out.println("Enter your choice:");
-            
+            // Show GameLobby options 
+            System.out.println("GAME LOBBY");
+            System.out.println("[1] FAST TRAVEL");
+            System.out.println("[2] LEVEL UP");
+            System.out.println("[3] INVENTORY");
+            System.out.println("[4] SHOP");
+            System.out.println("[5] QUIT GAME");
+            System.out.print("Your Choice: ");
             /* 
             while (!scanner.hasNextInt()) {
                 System.out.println("Invalid input. Please enter a number between 1 and 5.");
