@@ -79,6 +79,7 @@ public class GameLobby {
         System.out.println("[1] Stormveil Castle");
         System.out.println("[2] Raya Lucaria Academy [LOCKED]");
         System.out.println("[3] The Elden Throne [LOCKED]");
+        System.out.print("Your Choice: ");
 
         Scanner scanner = new Scanner(System.in);
         int destination = scanner.nextInt();
