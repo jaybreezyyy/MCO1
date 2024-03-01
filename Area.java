@@ -88,7 +88,7 @@ public class Area {
             interacted = interactWithTile(action); // Check if the player interacted with a special tile
 
         } while (action != 'Q' && !leaveFloor);
-        scanner.close();
+        
     }    
 
     private void displayArea() {

@@ -28,7 +28,7 @@ public class GameLobby {
             System.out.println("[3] INVENTORY");
             System.out.println("[4] SHOP");
             System.out.println("[5] QUIT GAME");
-    
+            
             // Show character details
             System.out.println("DETAILS:");
             System.out.println("Name: " + playerName);
@@ -37,12 +37,17 @@ public class GameLobby {
             System.out.println("Runes: " + runes);
             System.out.println("System Messages: ");
             System.out.println("Enter your choice:");
-
+            
+            /* 
             while (!scanner.hasNextInt()) {
                 System.out.println("Invalid input. Please enter a number between 1 and 5.");
-                scanner.next();
+                if(hasJustExitedMap)
+                    hasJustExitedMap = false;
+                else
+                    scanner.next();
                  // Consume the non-integer input
             }
+            */
             choice = scanner.nextInt();
             scanner.nextLine(); // Consume the newline character
             switch (choice) {
@@ -62,9 +67,9 @@ public class GameLobby {
                     quitGame();
                     break;
                 default:
-                    System.out.println("Invalid choice. Please try again.");
+                    System.out.println("Invalid input. Please enter a number between 1 and 5.");
             }
-        } while (choice != 5); // Exit loop when user chooses to quit
+        } while (choice != 5); // Exit loop when user chooses to quitq
     }
 
     public void fastTravel() {
