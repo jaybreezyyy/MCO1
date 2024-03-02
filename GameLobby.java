@@ -24,14 +24,14 @@ public class GameLobby {
         Scanner scanner = new Scanner(System.in);
         int choice = 0;
         do {
+            clearScreen();
             // Show character details
             System.out.println("DETAILS:");
             System.out.println("Name: " + playerName);
             System.out.println("Job Class: " + jobClass);
             System.out.println("Level: " + level);
             System.out.println("Runes: " + character.getRuneCount());
-            System.out.println("System Messages: ");
-            System.out.println("Enter your choice:");
+            System.out.println("System Messages: \n\n");
             // Show GameLobby options 
             System.out.println("GAME LOBBY");
             System.out.println("[1] FAST TRAVEL");
@@ -75,19 +75,21 @@ public class GameLobby {
     }
 
     public void fastTravel() {
+        Scanner scanner = new Scanner(System.in);
+        boolean continueTraveling = true;
+        do{
         System.out.println("Select destination:");
         System.out.println("[1] Stormveil Castle");
         System.out.println("[2] Raya Lucaria Academy [LOCKED]");
         System.out.println("[3] The Elden Throne [LOCKED]");
         System.out.print("Your Choice: ");
-
-        Scanner scanner = new Scanner(System.in);
         int destination = scanner.nextInt();
         scanner.nextLine(); // Consume the newline character
 
         switch (destination) {
             case 1:
                 System.out.println("Fast traveling to Stormveil Castle...");
+                continueTraveling = false;
                 break;
             case 2:
                 System.out.println("Raya Lucaria Academy is currently locked.");
@@ -97,8 +99,8 @@ public class GameLobby {
                 break;
             default:
                 System.out.println("Invalid destination. Please try again.");
-        }
-
+            }
+        } while (continueTraveling);
         // Call the next Java code, Area.java, to continue the game
         Area area = new Area(character);
         area.play();
@@ -120,7 +122,7 @@ public class GameLobby {
             System.out.println("[5] Level Intelligence");
             System.out.println("[6] Level Faith");
             System.out.println("[7] Add Runes");
-            System.out.println("[8] Back");
+            System.out.println("[8] Back\n\n");
 
             System.out.println("DETAILS");
             System.out.println("Level: " + String.valueOf(level));
@@ -145,7 +147,7 @@ public class GameLobby {
                     {
                         System.out.println("LEVEL HEALTH");
                         System.out.println("[1] Add Level to Health");
-                        System.out.println("[2] Back");
+                        System.out.println("[2] Back\n");
 
                         System.out.println("Level: " + String.valueOf(level));
                         System.out.println("Health: " + String.valueOf(character.getHealth()));
@@ -184,7 +186,7 @@ public class GameLobby {
                     {
                         System.out.println("LEVEL ENDURANCE");
                         System.out.println("[1] Add Level Endurance");
-                        System.out.println("[2] Back");
+                        System.out.println("[2] Back\n");
 
                         System.out.println("Level: " + String.valueOf(level));
                         System.out.println("Endurance: " + String.valueOf(character.getEndurance()));
@@ -223,7 +225,7 @@ public class GameLobby {
                     {
                         System.out.println("LEVEL DEXTERITY");
                         System.out.println("[1] Add Level Dexterity");
-                        System.out.println("[2] Back");
+                        System.out.println("[2] Back\n");
 
                         System.out.println("Level: " + String.valueOf(level));
                         System.out.println("Dexterity: " + String.valueOf(character.getDexterity()));
@@ -262,7 +264,7 @@ public class GameLobby {
                     {
                         System.out.println("LEVEL STRENGTH");
                         System.out.println("[1] Add Level Strength");
-                        System.out.println("[2] Back");
+                        System.out.println("[2] Back\n");
 
                         System.out.println("Level: " + String.valueOf(level));
                         System.out.println("Strength: " + String.valueOf(character.getStrength()));
@@ -301,7 +303,7 @@ public class GameLobby {
                 {
                     System.out.println("LEVEL INTELLIGENCE");
                     System.out.println("[1] Add Level Intelligence");
-                    System.out.println("[2] Back");
+                    System.out.println("[2] Back\n");
 
                     System.out.println("Level: " + String.valueOf(level));
                     System.out.println("Endurance: " + String.valueOf(character.getIntelligence()));
@@ -340,7 +342,7 @@ public class GameLobby {
                     {
                         System.out.println("LEVEL FAITH");
                         System.out.println("[1] Add Level to Faith");
-                        System.out.println("[2] Back");
+                        System.out.println("[2] Back\n");
 
                         System.out.println("Level: " + String.valueOf(level));
                         System.out.println("Faith: " + String.valueOf(character.getFaith()));
@@ -389,6 +391,21 @@ public class GameLobby {
                     break;
             }
         }
+    }
+
+    // FOR WINDOWS (SYSTEM CLEAR SCREEN)
+    /*public static void clearScreen() { 
+        try {
+            new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }*/
+
+    // FOR MAC/UNIX/LINUX OPERATION SYSTEMS (SYSTEM CLEAR SCREEN)
+    public static void clearScreen() {
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
     }
 
     public void openInventory() {
