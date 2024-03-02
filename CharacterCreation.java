@@ -15,6 +15,7 @@ public class CharacterCreation {
         Scanner scanner = new Scanner(System.in);
         int choice = 0;
         do {
+            clearScreen();
             System.out.println("Character Creation");
             System.out.println("[1] Input Name");
             System.out.println("[2] Select Job Class");
@@ -67,6 +68,7 @@ public class CharacterCreation {
     }
 
     private void selectJobClass(Scanner scanner) {
+        clearScreen();
         System.out.println("Select your job class:");
         System.out.println("_____________________________________________________________________________________________");
         System.out.println("| Option |   Job Class  |  HP  |  Endurance | Dexterity |  Strength  | Intelligence | Faith |");
@@ -175,6 +177,22 @@ public class CharacterCreation {
     {
         return this.fth;
     }
+
+    // FOR WINDOWS (SYSTEM CLEAR SCREEN)
+    /*public static void clearScreen() { 
+        try {
+            new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }*/
+
+    // FOR MAC/UNIX/LINUX OPERATION SYSTEMS (SYSTEM CLEAR SCREEN)
+    public static void clearScreen() {
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
+    }
+    
 
     private void printCharacterDetails() {
         System.out.println("Character Details:");
