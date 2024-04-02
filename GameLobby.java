@@ -1,8 +1,10 @@
 import java.util.Scanner;
-
+import java.util.ArrayList;
+import java.util.List;
 import javax.sound.midi.Soundbank;
 
 public class GameLobby {
+    private List<Weapon> inventory = new ArrayList<>();
     private String playerName;
     private String jobClass;
     private int level;
@@ -420,9 +422,50 @@ public class GameLobby {
     }
 
     public void openInventory() {
-        // Implementation for opening inventory
-        System.out.println("Implementing inventory feature...");
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("INVENTORY:");
+        for (int i = 0; i < inventory.size(); i++) {
+            Weapon weapon = inventory.get(i);
+            // Display each weapon with its dexterity requirement
+            System.out.println("[" + (i+1) + "] " + weapon.getName() + " (Dex Req: " + weapon.getDexReq() + ")");
+        }
+        System.out.println("[" + (inventory.size() + 1) + "] Back");
+    
+        System.out.print("Select a weapon or go back: ");
+        int choice = scanner.nextInt();
+        if (choice > 0 && choice <= inventory.size()) {
+            Weapon selectedWeapon = inventory.get(choice - 1);
+            if (character.getDexterity() >= selectedWeapon.getDexReq()) {
+                character.setHealth(selectedWeapon.getHp());
+                character.setDexterity(selectedWeapon.getDex());
+                character.setEndurance(selectedWeapon.getEnd());
+                character.setStrength(selectedWeapon.getStr());
+                character.setIntelligence(selectedWeapon.getIntel());
+                character.setFaith(selectedWeapon.getFth());
+                System.out.println(selectedWeapon.getName() + " equipped!");
+            } else {
+                System.out.println("Cannot equip " + selectedWeapon.getName() + ". Dexterity requirement not met.");
+            }
+        } else if (choice == inventory.size() + 1) {
+            System.out.println("Returning to game lobby...");
+        } else {
+            System.out.println("Invalid selection. Please try again.");
+        }
     }
+    
+    
+    private void equipWeapon(Weapon weapon) {
+        character.setHealth(weapon.getHp());
+        character.setDexterity(weapon.getDex());
+        character.setEndurance(weapon.getEnd());
+        character.setStrength(weapon.getStr());
+        character.setIntelligence(weapon.getIntel());
+        character.setFaith(weapon.getFth());
+        System.out.println(weapon.getName() + " equipped!");
+    }
+    
+    
+    
 
     public void openShop() {
         // Implementation for opening shop
@@ -473,8 +516,8 @@ public class GameLobby {
                                 case 1:
                                     if(character.getRuneCount() >= 1000){
                                         character.subtractRuneCount(1000);
-                                        weaponName = "Short Sword";
-                                        setWeaponStat(0, 13, 15, 15, 15, 15);
+                                        Weapon ShortSword = new Weapon("Short Sword", 0, 0, 15, 15, 15, 15, 13);
+                                        inventory.add(ShortSword);
                                         
                                         System.out.println("You've purchased Short Sword");
                                     }
@@ -484,8 +527,9 @@ public class GameLobby {
                                 case 2:
                                     if(character.getRuneCount() >= 2000){
                                         character.subtractRuneCount(2000);
-                                        weaponName = "Rogier's Rapier";
-                                        setWeaponStat(10, 18, 25, 35, 35, 35);
+                                        Weapon RogerRapier = new Weapon("Rogier's Rapier", 10, 0, 25, 35, 35, 35, 18);
+                                        inventory.add(RogerRapier);
+
                                         System.out.println("You've purchased Rogier's Rapier");
                                     }
                                     else
@@ -494,8 +538,8 @@ public class GameLobby {
                                 case 3:
                                     if(character.getRuneCount() >= 4000){
                                         character.subtractRuneCount(4000);
-                                        weaponName = "Coded Sword";
-                                        setWeaponStat(20, 21, 30, 40, 40, 40);
+                                        Weapon CodedSword = new Weapon("Coded Sword", 20, 0, 35, 40, 40, 40, 21);
+                                        inventory.add(CodedSword);
                                         System.out.println("You've purchased Coded Sword");
                                     }
                                     else
@@ -504,8 +548,8 @@ public class GameLobby {
                                 case 4:
                                     if(character.getRuneCount() >= 8000){
                                         character.subtractRuneCount(8000);
-                                        weaponName = "Sword of Night and Flame";
-                                        setWeaponStat(30, 25, 45, 55, 55, 55);
+                                        Weapon NightFlame = new Weapon("Sword of Night and Flame", 30, 0, 45, 55, 55, 55, 25);
+                                        inventory.add(NightFlame);
                                         System.out.println("You've purchased Sword of Night and Flame");
                                     }
                                     else
@@ -546,8 +590,8 @@ public class GameLobby {
                                 case 1:
                                     if(character.getRuneCount() >= 1875){
                                         character.subtractRuneCount(1875); 
-                                        weaponName = "Uchigatana";
-                                        setWeaponStat(20, 15, 30, 0, 0, 30);
+                                        Weapon uchigatana = new Weapon("Uchigattana", 20, 0, 35, 30, 0, 0, 15);
+                                        inventory.add(uchigatana);
                                         System.out.println("You've purchased Uchigatana");
                                     }
                                     else
@@ -556,8 +600,8 @@ public class GameLobby {
                                 case 2:
                                     if(character.getRuneCount() >= 3750){
                                         character.subtractRuneCount(3750);
-                                        weaponName = "Moonveil";
-                                        setWeaponStat(30, 18, 40, 0, 0, 45);
+                                        Weapon moonveil = new Weapon("Moonveil", 30, 0, 40, 45, 0, 0, 20);
+                                        inventory.add(moonveil);
                                         System.out.println("You've purchased Moonveil");
                                     }
                                     else
@@ -566,8 +610,8 @@ public class GameLobby {
                                 case 3:
                                     if(character.getRuneCount() >= 7500){
                                         character.subtractRuneCount(7500);
-                                        weaponName = "River of Blood";
-                                        setWeaponStat(40, 25, 45, 0, 0, 60);
+                                        Weapon riverBlood = new Weapon("River of Blood", 40, 0, 45, 60, 0, 0, 25);
+                                        inventory.add(riverBlood);
                                         System.out.println("You've purchased River of Blood");
                                     }
                                     else
@@ -576,8 +620,8 @@ public class GameLobby {
                                 case 4:
                                     if(character.getRuneCount() >= 15000){
                                         character.subtractRuneCount(15000);
-                                        weaponName = "Hand of Malenia";
-                                        setWeaponStat(50, 30, 50, 0, 0, 75);
+                                        Weapon malenia = new Weapon("Hand of Malenia", 50, 0, 50, 75, 0, 0, 30);
+                                        inventory.add(malenia);
                                         System.out.println("You've purchased Hand of Malenia");
                                     }
                                     else
@@ -616,8 +660,8 @@ public class GameLobby {
                                 case 1:
                                     if(character.getRuneCount() >= 1500){
                                         character.subtractRuneCount(1500);
-                                        weaponName = "Whip";
-                                        setWeaponStat(15, 20, 60, 0, 0, 20);
+                                        Weapon whip = new Weapon("Whip", 15, 0, 60, 20, 0, 0, 20);
+                                        inventory.add(whip);
                                         System.out.println("You've purchased Whip");
                                     }
                                     else
@@ -626,8 +670,8 @@ public class GameLobby {
                                 case 2:
                                     if(character.getRuneCount() >= 3000){
                                         character.subtractRuneCount(3000);
-                                        weaponName = "Urumi";
-                                        setWeaponStat(20, 25, 70, 0, 10, 40);
+                                        Weapon urumi = new Weapon("Urumi", 20, 0, 70, 40, 10, 0, 25);
+                                        inventory.add(urumi);
                                         System.out.println("You've purchased Urumi");
                                     }
                                     else
@@ -636,8 +680,8 @@ public class GameLobby {
                                 case 3:
                                     if(character.getRuneCount() >= 5000){
                                         character.subtractRuneCount(5000);
-                                        weaponName = "Thorned Whip";
-                                        setWeaponStat(30, 30, 80, 40, 0, 50);
+                                        Weapon thorned = new Weapon("Thorned Whip", 30, 0, 80, 50, 0, 40, 30);
+                                        inventory.add(thorned);
                                         System.out.println("You've purchased Thorned Whip");
                                     }
                                     else
@@ -646,8 +690,8 @@ public class GameLobby {
                                 case 4:
                                     if(character.getRuneCount() >= 10000){
                                         character.subtractRuneCount(10000);
-                                        weaponName = "Hollow's Petal Whip";
-                                        setWeaponStat(35, 35, 90, 20, 20, 55);
+                                        Weapon petalWhip = new Weapon("Hollow's Petal Whip", 35, 0, 90, 55, 20, 20, 35);
+                                        inventory.add(petalWhip);
                                         System.out.println("You've purchased Hollow's Petal Whip");
                                     }
                                     else
@@ -687,8 +731,8 @@ public class GameLobby {
                                 case 1:
                                     if(character.getRuneCount() >= 3000){
                                         character.subtractRuneCount(3000);
-                                        weaponName = "Claymore";
-                                        setWeaponStat(15, 9, 10, 0, 0, 20);
+                                        Weapon claymore = new Weapon("Claymore", 15, 0, 10, 20, 0, 0, 9);
+                                        inventory.add(claymore);
                                         System.out.println("You've purchased Claymore");
                                     }
                                     else
@@ -697,8 +741,8 @@ public class GameLobby {
                                 case 2:
                                     if(character.getRuneCount() >= 6000){
                                         character.subtractRuneCount(6000);
-                                        weaponName = "Starscourage Greatsword";
-                                        setWeaponStat(20, 14, 15, 20, 0, 40);
+                                        Weapon stars = new Weapon("Starscouraage Greatsword", 20, 0, 15, 40, 0, 20, 14);
+                                        inventory.add(stars);
                                         System.out.println("You've purchased Starscourage Greatsword");
                                     }
                                     else
@@ -707,8 +751,8 @@ public class GameLobby {
                                 case 3:
                                     if(character.getRuneCount() >= 12000){
                                         character.subtractRuneCount(12000);
-                                        weaponName = "Inseprable Sword";
-                                        setWeaponStat(25, 19, 20, 60, 60, 70);
+                                        Weapon insperable = new Weapon("Inseprable Sword", 25, 0, 20, 70, 60, 60, 19);
+                                        inventory.add(insperable);
                                         System.out.println("You've purchased Inseprable Sword");
                                     }
                                     else
@@ -717,8 +761,8 @@ public class GameLobby {
                                 case 4:
                                     if(character.getRuneCount() >= 24000){
                                         character.subtractRuneCount(24000);
-                                        weaponName = "Maliketh's Black Blade";
-                                        setWeaponStat(30, 24, 25, 60, 40, 80);
+                                        Weapon maliketh = new Weapon("Maliketh's Black Blade", 30, 0, 25, 80, 40, 60, 24);
+                                        inventory.add(maliketh);
                                         System.out.println("You've purchased Maliketh's Black Blade");
                                     }
                                     else
@@ -758,8 +802,8 @@ public class GameLobby {
                                 case 1:
                                     if(character.getRuneCount() >= 2000){
                                         character.subtractRuneCount(2000);
-                                        weaponName = "Astrologer's Staff";
-                                        setWeaponStat(5,12, 20, 15, 25, 5);
+                                        Weapon astro = new Weapon("Astrologer's Staff", 5, 0, 20, 5, 25, 15, 12);
+                                        inventory.add(astro);
                                         System.out.println("You've purchased Astrologer's Staff");
                                     }
                                     else
@@ -768,8 +812,8 @@ public class GameLobby {
                                 case 2:
                                     if(character.getRuneCount() >= 4000){
                                         character.subtractRuneCount(4000);
-                                        weaponName = "Albinauric Staff";
-                                        setWeaponStat(10, 14, 30, 35, 45, 10);
+                                        Weapon albi = new Weapon("Albinauric Staff", 10, 0, 30, 10, 45, 35, 12);
+                                        inventory.add(albi);
                                         System.out.println("You've purchased Albinauric Staff");
                                     }
                                     else
@@ -778,8 +822,8 @@ public class GameLobby {
                                 case 3:
                                     if(character.getRuneCount() >= 8000){
                                         character.subtractRuneCount(8000);
-                                        weaponName = "Staff of The Guilty";
-                                        setWeaponStat(15, 16, 40, 60, 65, 15);
+                                        Weapon guilty = new Weapon("Staff of the Guilty", 15, 0, 40, 15, 65, 60, 16);
+                                        inventory.add(guilty);
                                         System.out.println("You've purchased Staff of The Guilty");
                                     }
                                     else
@@ -788,8 +832,8 @@ public class GameLobby {
                                 case 4:
                                     if(character.getRuneCount() >= 16000){
                                         character.subtractRuneCount(16000);
-                                        weaponName = "Carian Regal Scepter";
-                                        setWeaponStat(25, 18, 50, 75, 85, 20);
+                                        Weapon carian = new Weapon("Crian Regal Scepter", 25, 0, 50, 20, 85, 75, 18);
+                                        inventory.add(carian);
                                         System.out.println("You've purchased Carian Regal Scepter");
                                     }
                                     else
@@ -828,8 +872,8 @@ public class GameLobby {
                                 case 1:
                                     if(character.getRuneCount() >= 2500){
                                         character.subtractRuneCount(2500);
-                                        weaponName = "Finger Seal";
-                                        setWeaponStat(10,10, 45, 20, 15, 0);
+                                        Weapon finger = new Weapon("Finger Seal", 10, 0, 45, 0, 15, 20, 10);
+                                        inventory.add(finger);
                                         System.out.println("You've purchased Finger Seal");
                                     }
                                     else
@@ -838,8 +882,8 @@ public class GameLobby {
                                 case 2:
                                     if(character.getRuneCount() >= 5000){
                                         character.subtractRuneCount(5000);
-                                        weaponName = "Godslayer's Seal";
-                                        setWeaponStat(15, 12, 50, 40, 35, 0);
+                                        Weapon god = new Weapon("Godslayer's Seal", 15, 0, 50, 0, 35, 40, 12);
+                                        inventory.add(god);
                                         System.out.println("You've purchased Godslayer's Seal");
                                     }
                                     else
@@ -848,8 +892,8 @@ public class GameLobby {
                                 case 3:
                                     if(character.getRuneCount() >= 10000){
                                         character.subtractRuneCount(10000);
-                                        weaponName = "Golden order Seal";
-                                        setWeaponStat(20, 14, 55, 65, 65, 0);
+                                        Weapon gold = new Weapon("Golden order Seal", 20, 0, 55, 0, 65, 65, 14);
+                                        inventory.add(gold);
                                         System.out.println("You've purchased Golden order Seal");
                                     }
                                     else
@@ -858,8 +902,8 @@ public class GameLobby {
                                 case 4:
                                     if(character.getRuneCount() >= 15000){
                                         character.subtractRuneCount(15000); 
-                                        weaponName = "Dragon Communion Seal";
-                                        setWeaponStat(25, 18, 60, 80, 75, 0);
+                                        Weapon dragon = new Weapon("Dragon Communion Seal", 25, 0, 60, 0, 75, 80, 18);
+                                        inventory.add(dragon);
                                         System.out.println("You've purchased Dragon Communion Seal");
                                     }
                                     else
@@ -886,7 +930,7 @@ public class GameLobby {
             }
         }    
 
-    public void setWeaponStat(int weaponHp, int weaponDex, int weaponEnd, int weaponFth, int weaponInt, int weaponStr){
+    public void setWeaponStat(int weaponHp, int weaponDex, int weaponEnd, int weaponFth, int weaponInt, int weaponStr, int dexReq){
         this.weaponHp = weaponHp;
         this.weaponDex = weaponDex;
         this.weaponEnd = weaponEnd;
@@ -939,5 +983,54 @@ public class GameLobby {
         System.out.println("Exiting the game...");
         TitleScreen titleScreen = new TitleScreen();
         titleScreen.showTitleScreen();
+    }
+}
+
+class Weapon {
+    private String name;
+    private int hp, dex, end, str, intel, fth, dexReq;
+
+    public Weapon(String name, int hp, int dex, int end, int str, int intel, int fth, int dexReq) {
+        this.name = name;
+        this.hp = hp;
+        this.dex = dex;
+        this.end = end;
+        this.str = str;
+        this.intel = intel;
+        this.fth = fth;
+        this.dexReq = dexReq;
+    }
+
+    // Getters
+    public String getName() {
+        return name;
+    }
+
+    public int getHp() {
+        return hp;
+    }
+
+    public int getDex() {
+        return dex;
+    }
+
+    public int getEnd() {
+        return end;
+    }
+
+    public int getStr() {
+        return str;
+    }
+
+    public int getIntel() {
+        return intel;
+    }
+
+    public int getFth() {
+        return fth;
+    }
+
+    public int getDexReq(){
+        return dexReq;
     }
 }
