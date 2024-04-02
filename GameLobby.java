@@ -10,6 +10,7 @@ public class GameLobby {
     private int level;
     private int runes;
     private CharacterCreation character;
+    private Weapon selectedWeapon;
     private String weaponName;
     private int weaponCost;
     private int weaponDex;
@@ -37,7 +38,6 @@ public class GameLobby {
         Scanner scanner = new Scanner(System.in);
         int choice = 0;
         do {
-            clearScreen();
             // Show character details
             System.out.println("DETAILS:");
             System.out.println("Name: " + playerName);
@@ -141,12 +141,12 @@ public class GameLobby {
             System.out.println("Level: " + String.valueOf(level));
             System.out.println("Rune Cost: " + String.valueOf((level * 100) / 2));
             System.out.println("Runes: " + String.valueOf(character.getRuneCount()));
-            System.out.println("Health: " + String.valueOf(character.getHealth()));
-            System.out.println("Endurance: " + String.valueOf(character.getEndurance()));
-            System.out.println("Dexterity: " + String.valueOf(character.getDexterity()));
-            System.out.println("Strength: " + String.valueOf(character.getStrength()));
-            System.out.println("Intelligence: " + String.valueOf(character.getIntelligence()));
-            System.out.println("Faith: " + String.valueOf(character.getFaith()));
+            System.out.println("Health: " + String.valueOf(character.getHealth() + (selectedWeapon != null ? selectedWeapon.getHp() : 0)));
+            System.out.println("Endurance: " + String.valueOf(character.getEndurance() + (selectedWeapon != null ? selectedWeapon.getEnd() : 0)));
+            System.out.println("Dexterity: " + String.valueOf(character.getDexterity() + (selectedWeapon != null ? selectedWeapon.getDex() : 0)));
+            System.out.println("Strength: " + String.valueOf(character.getStrength() + (selectedWeapon != null ? selectedWeapon.getStr() : 0)));
+            System.out.println("Intelligence: " + String.valueOf(character.getIntelligence() + (selectedWeapon != null ? selectedWeapon.getIntel() : 0)));
+            System.out.println("Faith: " + String.valueOf(character.getFaith() + (selectedWeapon != null ? selectedWeapon.getFth() : 0)));
             System.out.println("System Messages: ");
             
             System.out.println("Enter your choice: ");
@@ -406,21 +406,6 @@ public class GameLobby {
         }
     }
 
-    // FOR WINDOWS (SYSTEM CLEAR SCREEN)
-    /*public static void clearScreen() { 
-        try {
-            new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-    }*/
-
-    // FOR MAC/UNIX/LINUX OPERATION SYSTEMS (SYSTEM CLEAR SCREEN)
-    public static void clearScreen() {
-        System.out.print("\033[H\033[2J");
-        System.out.flush();
-    }
-
     public void openInventory() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("INVENTORY:");
@@ -436,12 +421,7 @@ public class GameLobby {
         if (choice > 0 && choice <= inventory.size()) {
             Weapon selectedWeapon = inventory.get(choice - 1);
             if (character.getDexterity() >= selectedWeapon.getDexReq()) {
-                character.setHealth(selectedWeapon.getHp());
-                character.setDexterity(selectedWeapon.getDex());
-                character.setEndurance(selectedWeapon.getEnd());
-                character.setStrength(selectedWeapon.getStr());
-                character.setIntelligence(selectedWeapon.getIntel());
-                character.setFaith(selectedWeapon.getFth());
+                this.selectedWeapon = selectedWeapon; // Assign the selected weapon
                 System.out.println(selectedWeapon.getName() + " equipped!");
             } else {
                 System.out.println("Cannot equip " + selectedWeapon.getName() + ". Dexterity requirement not met.");
@@ -452,20 +432,6 @@ public class GameLobby {
             System.out.println("Invalid selection. Please try again.");
         }
     }
-    
-    
-    private void equipWeapon(Weapon weapon) {
-        character.setHealth(weapon.getHp());
-        character.setDexterity(weapon.getDex());
-        character.setEndurance(weapon.getEnd());
-        character.setStrength(weapon.getStr());
-        character.setIntelligence(weapon.getIntel());
-        character.setFaith(weapon.getFth());
-        System.out.println(weapon.getName() + " equipped!");
-    }
-    
-    
-    
 
     public void openShop() {
         // Implementation for opening shop
@@ -959,23 +925,23 @@ public class GameLobby {
         return this.weaponHp;
     }
 
-    public int getweaponDex(){
+    public int getWeaponDex(){
         return this.weaponDex;
     }
     
-    public int getweaponEnd(){
+    public int getWeaponEnd(){
         return this.weaponEnd;
     }
 
-    public int getweaponFth(){
+    public int getWeaponFth(){
         return this.weaponFth;
     }
     
-    public int getweaponInt(){
+    public int getWeaponInt(){
         return this.weaponInt;
     }
     
-    public int getweaponStr(){
+    public int getWeaponStr(){
         return this.weaponStr;
     }
 
@@ -1002,6 +968,10 @@ class Weapon {
     }
 
     // Getters
+    public Weapon getSelectedWeapon() {
+        return this.selectedWeapon;
+    }
+    
     public String getName() {
         return name;
     }
