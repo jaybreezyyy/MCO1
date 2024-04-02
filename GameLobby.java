@@ -455,9 +455,13 @@ public class GameLobby {
                             System.out.println("Current Runes: " + String.valueOf(character.getRuneCount()));
                             System.out.println("SWORDS [Price]");
                             System.out.println("[1]Short Sword [1,000]");
+                            System.out.println("[Dexterity:13][Health:0][Endurance:15][Strength:15][Intelligence:15][Faith:15]");
                             System.out.println("[2]Rogier's Rapier [2,000]");
+                            System.out.println("[Dexterity:18][Health:10][Endurance:25][Strength:35][Intelligence:35][Faith:35]");
                             System.out.println("[3]Coded Sword [4,000]");
+                            System.out.println("[Dexterity:21][Health:20][Endurance:30][Strength:40][Intelligence:40][Faith:40]");
                             System.out.println("[4]Sword of Night and Flame [8,000]");
+                            System.out.println("[Dexterity:25][Health:30][Endurance:45][Strength:55][Intelligence:55][Faith:55]");
                             System.out.println("[5]Back");
 
                             System.out.println("Enter Your Choice Here:");
@@ -524,9 +528,13 @@ public class GameLobby {
                             System.out.println("Current Runes: " + String.valueOf(character.getRuneCount()));
                             System.out.println("Katana [Price]");
                             System.out.println("[1]Uchigatana [1,875]");
+                            System.out.println("[Dexterity:15][Health:20][Endurance:35][Strength:30][Intelligence:0][Faith:0]");
                             System.out.println("[2]Moonveil [3,750]");
+                            System.out.println("[Dexterity:20][Health:30][Endurance:40][Strength:45][Intelligence:0][Faith:0]");
                             System.out.println("[3]River of Blood [7,500]");
+                            System.out.println("[Dexterity:25][Health:40][Endurance:45][Strength:60][Intelligence:0][Faith:0]");
                             System.out.println("[4]Hand of Malenia [15,000]");
+                            System.out.println("[Dexterity:30][Health:50][Endurance:50][Strength:75][Intelligence:0][Faith:0]");
                             System.out.println("[5]Back");
                             
                             System.out.println("Enter Your Choice Here:");
@@ -591,9 +599,13 @@ public class GameLobby {
                         System.out.println("Current Runes: " + String.valueOf(character.getRuneCount()));
                         System.out.println("Whips [Price]");
                         System.out.println("[1]Whip [1,500]");
+                        System.out.println("[Dexterity:20][Health:15][Endurance:60][Strength:20][Intelligence:0][Faith:0]");
                         System.out.println("[2]Urumi [3,000]");
+                        System.out.println("[Dexterity:25][Health:20][Endurance:70][Strength:40][Intelligence:10][Faith:0]");
                         System.out.println("[3]Thorned Whip [5,000]");
+                        System.out.println("[Dexterity:30][Health:30][Endurance:80][Strength:50][Intelligence:0][Faith:40]");
                         System.out.println("[4]Hollow's Petal Whip [10,000]");
+                        System.out.println("[Dexterity:35][Health:35][Endurance:90][Strength:55][Intelligence:20][Faith:20]");
                         System.out.println("[5]Back");
                         
                         System.out.println("Enter Your Choice Here:");
@@ -658,9 +670,13 @@ public class GameLobby {
                         System.out.println("Current Runes: " + String.valueOf(character.getRuneCount()));
                         System.out.println("Greatswords [Price]");
                         System.out.println("[1]Claymore [3,000]");
+                        System.out.println("[Dexterity:9][Health:15][Endurance:10][Strength:20][Intelligence:0][Faith:0]");
                         System.out.println("[2]Starscourage Greatsword [6,000]");
+                        System.out.println("[Dexterity:14][Health:20][Endurance:15][Strength:40][Intelligence:0][Faith:20]");
                         System.out.println("[3]Inseprable Sword [12,000]");
+                        System.out.println("[Dexterity:19][Health:25][Endurance:20][Strength:70][Intelligence:60][Faith:60]");
                         System.out.println("[4]Maliketh's Black Blade [24,000]");
+                        System.out.println("[Dexterity:24][Health:30][Endurance:25][Strength:80][Intelligence:40][Faith:60]");
                         System.out.println("[5]Back");
                         
                         System.out.println("Enter Your Choice Here:");
@@ -725,9 +741,13 @@ public class GameLobby {
                         System.out.println("Current Runes: " + String.valueOf(character.getRuneCount()));
                         System.out.println("Staves [Price]");
                         System.out.println("[1]Astrologer's Staff [2,000]");
+                        System.out.println("[Dexterity:12][Health:5][Endurance:20][Strength:5][Intelligence:25][Faith:15]");
                         System.out.println("[2]Albinauric Staff [4,000]");
+                        System.out.println("[Dexterity:14][Health:10][Endurance:30][Strength:10][Intelligence:45][Faith:35]");
                         System.out.println("[3]Staff of The Guilty [8,000]");
+                        System.out.println("[Dexterity:16][Health:15][Endurance:40][Strength:15][Intelligence:65][Faith:60]");
                         System.out.println("[4]Carian Regal Scepter [16,000]");
+                        System.out.println("[Dexterity:18][Health:25][Endurance:50][Strength:20][Intelligence:85][Faith:75]");
                         System.out.println("[5]Back");
                         
                         System.out.println("Enter Your Choice Here:");
@@ -791,9 +811,13 @@ public class GameLobby {
                         System.out.println("Current Runes: " + String.valueOf(character.getRuneCount()));
                         System.out.println("Seals [Price]");
                         System.out.println("[1]Finger Seal [2,500]");
+                        System.out.println("[Dexterity:10][Health:10][Endurance:45][Strength:0][Intelligence:15][Faith:20]");
                         System.out.println("[2]Godslayer's Seal [5,000]");
+                        System.out.println("[Dexterity:12][Health:15][Endurance:50][Strength:0][Intelligence:35][Faith:40]");
                         System.out.println("[3]Golden order Seal [10,000]");
+                        System.out.println("[Dexterity:14][Health:20][Endurance:55][Strength:0][Intelligence:65][Faith:65]");
                         System.out.println("[4]Dragon Communion Seal [15,000]");
+                        System.out.println("[Dexterity:18][Health:25][Endurance:60][Strength:0][Intelligence:75][Faith:80]");
                         System.out.println("[5]Back");
                         
                         System.out.println("Enter Your Choice Here:");
