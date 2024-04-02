@@ -87,7 +87,6 @@ public class Area {
             displayArea();
             System.out.println("Enter your move (W/A/S/D to move, E to interact, Q to quit): ");
             action = scanner.next().charAt(0);
-            clearScreen();
             interacted = interactWithTile(action); // Check if the player interacted with a special tile
         } while (action != 'Q' && !leaveFloor);
         
@@ -244,6 +243,9 @@ public class Area {
         int randomRune = (int)Math.floor(Math.random() * (runeMax - runeMin + 1) + runeMin); //Generates a random number from 50 - 150 for rune tiles
         if (chance <= 75) {
             System.out.println("You've encountered a Monster!");
+            /*Enemy enemy = Enemy.spawnEnemy(currentFloor); // Assuming currentFloor is used as the area index
+            Battle battle = new Battle(character, enemy);
+            battle.start();*/
         } else {
             System.out.println("You've encountered a Rune!");
             System.out.println("You've obtained " + randomRune + " Runes");
@@ -272,23 +274,6 @@ public class Area {
                 return null; // Invalid floor
         }
     }
-
-    // FOR WINDOWS (SYSTEM CLEAR SCREEN)
-    /*public static void clearScreen() { 
-        try {
-            new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-    }*/
-
-    // FOR MAC/UNIX/LINUX OPERATION SYSTEMS (SYSTEM CLEAR SCREEN)
-    public static void clearScreen() {
-        System.out.print("\033[H\033[2J");
-        System.out.flush();
-    }
-
-
 }
 
 class Tile {
