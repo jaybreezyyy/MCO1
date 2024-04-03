@@ -103,6 +103,7 @@ public class GameLobby {
         switch (destination) {
             case 1:
                 System.out.println("Fast traveling to Stormveil Castle...");
+                //character.playerMaxHp();
                 Area area = new Area(character);
                 area.play();
                 continueTraveling = false;
@@ -428,6 +429,7 @@ public class GameLobby {
                         inventory.get(i).setIsEquipped(false);
                     inventory.get(choice - 1).setIsEquipped(true);
                     character.setSelectedWeapon(selectedWeapon);
+                    character.calcMaxHp();
                     System.out.println(selectedWeapon.getName() + " equipped!");
                 }
                 else
@@ -918,7 +920,14 @@ public class GameLobby {
                 }         
             }
         }    
-
+    
+    
+    public void playerMaxHp(){
+        ;
+    }
+    
+       
+    
     public void setWeaponStat(int weaponHp, int weaponDex, int weaponEnd, int weaponFth, int weaponInt, int weaponStr, int dexReq){
         this.weaponHp = weaponHp;
         this.weaponDex = weaponDex;

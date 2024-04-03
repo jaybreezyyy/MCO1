@@ -14,9 +14,11 @@ public class Battle {
     private double enemySorceryDef;
     private double enemyIncantationDef;
     
+
     public Battle(CharacterCreation character, int areaIndex){
         this.character = character;
         this.areaIndex = areaIndex;
+        generateEnemy();
     }
 
     // FOR WINDOWS (SYSTEM CLEAR SCREEN)
@@ -36,6 +38,7 @@ public class Battle {
 
     public boolean display(){
         while(true){
+            character.setMaxHp(100 * (character.getHealth() + character.getSelectedWeapon().getHp()) / 2);
             if(character.getCurrentHp() == 0)
             {
                 System.out.println(character.getName() + " has died!");
@@ -47,12 +50,12 @@ public class Battle {
                 System.out.println(character.getName() + " has slain " + this.enemyName + "!");
                 return true;
             }
-
+            
             boolean hasDodged = false;
             System.out.println("Player Name:" + character.getName());
             System.out.println("Player Health:" + character.getCurrentHp());
-            System.out.println("Enemy Name:");
-            System.out.println("Enemy Health:");
+            System.out.println("Enemy Name: " + this.enemyName);
+            System.out.println("Enemy Health:" + this.enemyHealth);
 
             System.out.println("[1]Attack");
             System.out.println("[2]Dodge");
@@ -96,14 +99,17 @@ public class Battle {
                 case 1:
                     int physicalDmgDealt = attackPhysical();
                     System.out.println(character.getName() + " did " + String.valueOf(physicalDmgDealt) + " damage!");
+                    isRunning = false;
                     break;
                 case 2:
                     int sorceryDmgDealt = attackSorcery();
                     System.out.println(character.getName() + " did " + String.valueOf(sorceryDmgDealt) + " damage!");
+                    isRunning = false;
                     break;
                 case 3:
                     int incantationDmgDealt = attackIncantation();
                     System.out.println(character.getName() + " did " + String.valueOf(incantationDmgDealt) + " damage!");
+                    isRunning = false;
                     break;
                 case 4:
                     isRunning = false;
@@ -178,4 +184,6 @@ public class Battle {
             this.enemyIncantationDef = .2;
         }
     }
+
+    
 }

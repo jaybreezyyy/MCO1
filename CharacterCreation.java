@@ -4,6 +4,8 @@ public class CharacterCreation {
     private String name;
     private String jobClass;
     private int hp;
+    private int maxHp;
+    private int baseHp;
     private int end;
     private int dex;
     private int str;
@@ -40,7 +42,7 @@ public class CharacterCreation {
                 case 3:
                     if (name != null && !name.isEmpty() && jobClass != null && !jobClass.isEmpty()) {
                         System.out.println("Confirming character creation...");
-                        printCharacterDetails();
+                        printCharacterDetails();   
                         GameLobby gameLobby = new GameLobby(name, jobClass, 1, 0, this); // Assuming initial level is 1 and initial runes is 0
                         gameLobby.showGameLobby();
                         return; // Exit the method after transitioning to the GameLobby
@@ -115,15 +117,32 @@ public class CharacterCreation {
         }
         System.out.println("Selected job class: " + jobClass);
     }
-    
+
+    public void setCurrentHp(int currentHp){
+        this.currentHp = currentHp;
+    }
+
+    public void calcMaxHp(){
+        int weaponHp;
+        if(this.selectedWeapon == null)
+            weaponHp = 0;
+        else    
+            weaponHp = this.selectedWeapon.getHp();
+        this.maxHp = 100 * ((this.baseHp + weaponHp) / 2);
+        this.currentHp = this.maxHp;
+    }
 
     private void setJobStats(int hp, int end, int dex, int str, int intell, int fth) {
-        this.hp = hp;
+        this.baseHp = hp;
         this.end = end;
         this.dex = dex;
         this.str = str;
         this.intell = intell;
         this.fth = fth;
+    }
+
+    public void setMaxHp(int maxHp){
+        this.maxHp = maxHp;
     }
 
     public void setHealth(int amount) {
@@ -163,6 +182,8 @@ public class CharacterCreation {
         return false;
         
     }
+
+
 
     
     public boolean subtractHp(int amount){
@@ -216,6 +237,13 @@ public class CharacterCreation {
     public int getCurrentHp(){
         return this.currentHp;
     }
+
+    public int getMaxHp(){
+        return this.maxHp;
+    }
+
+
+
     // FOR WINDOWS (SYSTEM CLEAR SCREEN)
     /*public static void clearScreen() { 
         try {
@@ -224,6 +252,8 @@ public class CharacterCreation {
             System.out.println(e);
         }
     }*/
+
+    
 
     // FOR MAC/UNIX/LINUX OPERATION SYSTEMS (SYSTEM CLEAR SCREEN)
     public static void clearScreen() {
