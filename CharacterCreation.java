@@ -10,6 +10,8 @@ public class CharacterCreation {
     private int intell;
     private int fth;
     private int runeCount = 0;
+    private int currentHp;
+    private Weapon selectedWeapon;
 
     public void createCharacter() {
         Scanner scanner = new Scanner(System.in);
@@ -148,6 +150,39 @@ public class CharacterCreation {
         this.fth += amount;
     }
 
+    public void setSelectedWeapon(Weapon selectedWeapon){
+        this.selectedWeapon = selectedWeapon;
+    }
+
+    public boolean addHp(int amount){
+        if(currentHp + amount <= hp)
+        {
+            currentHp += amount;
+            return true;
+        }
+        return false;
+        
+    }
+
+    
+    public boolean subtractHp(int amount){
+        if(currentHp - amount >= 0)
+        {
+            currentHp -= amount;
+            return true;
+        }
+        return false;
+        
+    }
+    
+    public Weapon getSelectedWeapon(){
+        return this.selectedWeapon;
+    }
+
+    public String getName(){
+        return this.name;
+    }
+
     public int getHealth()
     {
         return this.hp;
@@ -178,6 +213,9 @@ public class CharacterCreation {
         return this.fth;
     }
 
+    public int getCurrentHp(){
+        return this.currentHp;
+    }
     // FOR WINDOWS (SYSTEM CLEAR SCREEN)
     /*public static void clearScreen() { 
         try {

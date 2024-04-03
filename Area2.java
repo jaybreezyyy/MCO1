@@ -15,6 +15,7 @@ public class Area2 {
     private boolean interacted;
     private boolean leaveFloor;
     private CharacterCreation character;
+    private int areaIndex;
 
     public Area2(CharacterCreation character) {
         initializeFloors();
@@ -26,6 +27,7 @@ public class Area2 {
         interacted = false;
         leaveFloor = false;
         this.character = character;
+        areaIndex = 2;
     }
 
     private void initializeFloors() {

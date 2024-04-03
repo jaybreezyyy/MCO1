@@ -1,10 +1,10 @@
 import java.util.Scanner;
 import java.util.Random;
 
-public class Area {
-    private Tile[][] floor1;
-    private Tile[][] floor2;
-    private Tile[][] floor3;
+public class Area3 {
+    private Tile3[][] floor1;
+    private Tile3[][] floor2;
+    private Tile3[][] floor3;
     private int playerX;
     private int playerY;
     private int currentFloor;
@@ -14,11 +14,10 @@ public class Area {
     private boolean leaveFloor;
     private CharacterCreation character;
     private int areaIndex;
-    
 
-    public Area(CharacterCreation character) {
+    public Area3(CharacterCreation character) {
         initializeFloors();
-        playerX = 6; // Initial player position
+        playerX = 8; // Initial player position
         playerY = 1; // Initial player position
         currentFloor = 1; // Start at floor 1
         bossDefeated = false; // Boss is not defeated initially
@@ -26,27 +25,28 @@ public class Area {
         interacted = false;
         leaveFloor = false;
         this.character = character;
-        this.areaIndex = 1;
+        areaIndex = 3;
     }
 
     private void initializeFloors() {
         // Initialize floor 1
-        floor1 = new Tile[7][3];
+        floor1 = new Tile3[9][3];
         initializeFloor(floor1);
         // Initialize floor 2
-        floor2 = new Tile[7][7];
+        floor2 = new Tile3[7][7];
         initializeFloor(floor2);
         // Initialize floor 3
-        floor3 = new Tile[7][5];
+        floor3 = new Tile3[9][3];
         initializeFloor(floor3);
+
         // Set up special tiles
         setupSpecialTiles();
     }
 
-    private void initializeFloor(Tile[][] floor) {
+    private void initializeFloor(Tile3[][] floor) {
         for (int i = 0; i < floor.length; i++) {
             for (int j = 0; j < floor[0].length; j++) {
-                floor[i][j] = new Tile(); // Initialize all tiles
+                floor[i][j] = new Tile3(); // Initialize all tiles
             }
         }
         // Mark door tiles as unblocked
@@ -56,31 +56,34 @@ public class Area {
             floor[6][3].setDoor(true); // Door tile to floor 1
             floor[0][3].setDoor(true); // Door tile to floor 3
         } else if (floor == floor3) {
-            floor[6][2].setDoor(true); // Door tile to floor 2
-        }
+            floor[8][1].setDoor(true); // Door tile to floor 2
+        } 
     }
 
     private void setupSpecialTiles() {
         // Floor 1
-        floor1[6][1].setFastTravel(true); // Fast travel tile
-        floor1[1][0].setSpawn(true); // Spawn tile
-        floor1[1][2].setSpawn(true); // Spawn tile
+        floor1[8][1].setFastTravel(true); // Fast travel tile
+        floor1[4][1].setSpawn(true); // Spawn tile
         floor1[0][1].setAscendingDoor(true); // Door tile to floor 2
         // Floor 2
         floor2[6][3].setDescendingDoor(true); // Door tile to floor 1
         floor2[0][3].setAscendingDoor(true); // Door tile to floor 3
-        floor2[1][3].setSpawn(true); // Spawn tile
-        floor2[3][0].setSpawn(true); // Spawn tile
-        floor2[3][2].setSpawn(true); // Spawn tile
-        floor2[3][3].setSpawn(true); // Spawn tile
-        floor2[3][4].setSpawn(true); // Spawn tile
-        floor2[3][6].setSpawn(true); // Spawn tile
-        floor2[5][2].setSpawn(true); // Spawn tile
-        floor2[5][4].setSpawn(true); // Spawn tile
+        floor2[3][3].setBoss(true); // Spawn tile
+        floor2[0][0].setBlockedTile(true);
+        floor2[0][6].setBlockedTile(true);
+        floor2[6][0].setBlockedTile(true);
+        floor2[6][6].setBlockedTile(true);
         // Floor 3
-        floor3[6][2].setDescendingDoor(true); // Door tile to floor 2
-        floor3[3][2].setBoss(true); // Boss tile
-        floor3[0][2].setFastTravel(true); // Fast travel tile
+        floor3[1][0].setDescendingDoor(true); // Door tile to floor 2
+        floor3[3][0].setSpawn(true); // Spawn tile
+        floor3[5][0].setSpawn(true); // Spawn tile
+        floor3[7][0].setSpawn(true); // Spawn tile
+        floor3[1][2].setSpawn(true); // Spawn tile
+        floor3[3][2].setSpawn(true); // Spawn tile
+        floor3[5][2].setSpawn(true); // Spawn tile
+        floor3[7][2].setSpawn(true); // Spawn tile
+        floor3[0][1].setCreditTile(true); //credit tile
+        
     }
 
     public void play() {
@@ -97,7 +100,7 @@ public class Area {
     }    
 
     private void displayArea() {
-        Tile[][] currentFloorTiles = getCurrentFloor();
+        Tile3[][] currentFloorTiles = getCurrentFloor();
         for (int i = 0; i < currentFloorTiles.length; i++) {
             for (int j = 0; j < currentFloorTiles[i].length; j++) {
                 System.out.print(" __________ ");
@@ -114,7 +117,11 @@ public class Area {
                     System.out.print("|    B     |");
                 } else if (currentFloorTiles[i][j].isFastTravel()) {
                     System.out.print("|    F     |");
-                } else {
+                }else if(currentFloorTiles[i][j].isBlockedTile()){
+                    System.out.print("|▓▓▓▓▓▓▓▓▓▓|");
+                }else if(currentFloorTiles[i][j].isCreditTile()){
+                    System.out.print("|    C     |");
+                }else {
                     System.out.print("|          |");
                 }
             }
@@ -161,7 +168,7 @@ public class Area {
             playerX = newX;
             playerY = newY;
             System.out.println("Moved to: (" + playerX + ", " + playerY + ")");
-            Tile currentTile = getCurrentFloor()[playerX][playerY];
+            Tile3 currentTile = getCurrentFloor()[playerX][playerY];
             if(currentTile.isBoss() || currentTile.isDoor() || currentTile.isSpawn() || currentTile.isFastTravel())
                 System.out.println("You have stepped on a special tile! Press E to interact with it.");
         } else {
@@ -170,16 +177,16 @@ public class Area {
     }
 
     private boolean isValidMove(int x, int y) {
-        Tile[][] currentFloorTiles = getCurrentFloor();
-        if (currentFloorTiles == null || x < 0 || x >= currentFloorTiles.length || y < 0 || y >= currentFloorTiles[0].length) {
+        Tile3[][] currentFloorTiles = getCurrentFloor();
+        if (currentFloorTiles == null || x < 0 || x >= currentFloorTiles.length || y < 0 || y >= currentFloorTiles[0].length || currentFloorTiles[x][y].isBlockedTile()) {
             return false; // Invalid floor or out of bounds
         }
-        Tile destinationTile = currentFloorTiles[x][y];
+        Tile3 destinationTile = currentFloorTiles[x][y];
         return !destinationTile.isOccupied();
     }
 
     private void checkSpecialTile() {
-        Tile currentTile = getCurrentFloor()[playerX][playerY];
+        Tile3 currentTile = getCurrentFloor()[playerX][playerY];
         if (currentTile.isBoss()) {
             if (!bossDefeated) {
                 System.out.println("You've encountered the boss!");
@@ -201,7 +208,10 @@ public class Area {
                 leaveFloor = true;
                 // Implement fast travel tile behavior
             }
-        } else if (currentTile.isDoor()) {
+        } else if (currentTile.isCreditTile()) {
+            System.out.println("THANK YOU FOR PLAYING ELDEN ROUGE");
+            leaveFloor = true;
+        }else if (currentTile.isDoor()) {
             if (currentTile.isAscendingDoor()) {
                 ascendFloor();
             } else if (currentTile.isDescendingDoor()) {
@@ -217,8 +227,8 @@ public class Area {
             playerY = 3;
         } else if (currentFloor == 2) {
             currentFloor = 3;
-            playerX = 6; 
-            playerY = 2; 
+            playerX = 8; 
+            playerY = 1; 
         }
     }
     
@@ -240,15 +250,13 @@ public class Area {
     }
 
     private void interactWithSpawnTile() {
-        Tile currentTile = getCurrentFloor()[playerX][playerY];
+        Tile3 currentTile = getCurrentFloor()[playerX][playerY];
         int chance = random.nextInt(100) + 1;
         int runeMin = 50;
         int runeMax = 150;
         int randomRune = (int)Math.floor(Math.random() * (runeMax - runeMin + 1) + runeMin); //Generates a random number from 50 - 150 for rune tiles
         if (chance <= 75) {
             System.out.println("You've encountered a Monster!");
-            Battle battle = new Battle(character, 1);
-            battle.display();
         } else {
             System.out.println("You've encountered a Rune!");
             System.out.println("You've obtained " + randomRune + " Runes");
@@ -265,7 +273,7 @@ public class Area {
         // Implement quitting game, perhaps return to main menu or exit
     }
 
-    private Tile[][] getCurrentFloor() {
+    private Tile3[][] getCurrentFloor() {
         switch (currentFloor) {
             case 1:
                 return floor1;
@@ -296,7 +304,7 @@ public class Area {
 
 }
 
-class Tile {
+class Tile3 {
     private boolean occupied;
     private boolean spawn;
     private boolean interacted; // Added flag to track interaction
@@ -306,9 +314,11 @@ class Tile {
     private boolean fastTravel;
     private boolean ascendingDoor;
     private boolean descendingDoor;
+    private boolean blockedTile;
+    private boolean creditTile;
     
 
-    public Tile() {
+    public Tile3() {
         this.occupied = false;
         this.spawn = false;
         this.interacted = false; // Initialize as not interacted
@@ -318,9 +328,18 @@ class Tile {
         this.fastTravel = false;
         this.ascendingDoor = false;
         this.descendingDoor = false;
+        this.blockedTile = false;
+        this.creditTile = false;
 
     }
 
+    public boolean isCreditTile(){
+        return creditTile;
+    }
+
+    public boolean isBlockedTile(){
+        return blockedTile;
+    }
 
     public boolean isOccupied() {
         return occupied;
@@ -340,6 +359,14 @@ class Tile {
 
     public boolean isBossInteracted() {
         return bossInteracted;
+    }
+
+    public void setCreditTile(boolean creditTile){
+        this.creditTile = creditTile;
+    }
+
+    public void setBlockedTile(boolean blockedTile){
+        this.blockedTile = blockedTile;
     }
 
     public void setBossInteracted(boolean bossInteracted) {
