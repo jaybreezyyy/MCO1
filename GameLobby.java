@@ -138,15 +138,8 @@ public class GameLobby {
             System.out.println("[8] Back\n\n");
 
             System.out.println("DETAILS");
-            System.out.println("Level: " + String.valueOf(level));
-            System.out.println("Rune Cost: " + String.valueOf((level * 100) / 2));
-            System.out.println("Runes: " + String.valueOf(character.getRuneCount()));
-            System.out.println("Health: " + String.valueOf(character.getHealth() + (selectedWeapon != null ? selectedWeapon.getHp() : 0)));
-            System.out.println("Endurance: " + String.valueOf(character.getEndurance() + (selectedWeapon != null ? selectedWeapon.getEnd() : 0)));
-            System.out.println("Dexterity: " + String.valueOf(character.getDexterity() + (selectedWeapon != null ? selectedWeapon.getDex() : 0)));
-            System.out.println("Strength: " + String.valueOf(character.getStrength() + (selectedWeapon != null ? selectedWeapon.getStr() : 0)));
-            System.out.println("Intelligence: " + String.valueOf(character.getIntelligence() + (selectedWeapon != null ? selectedWeapon.getIntel() : 0)));
-            System.out.println("Faith: " + String.valueOf(character.getFaith() + (selectedWeapon != null ? selectedWeapon.getFth() : 0)));
+            displayCharacterDetailsWithWeapon();
+            
             System.out.println("System Messages: ");
             
             System.out.println("Enter your choice: ");
@@ -431,6 +424,20 @@ public class GameLobby {
         } else {
             System.out.println("Invalid selection. Please try again.");
         }
+    }
+
+    private void displayCharacterDetailsWithWeapon() {
+        System.out.println("DETAILS:");
+        System.out.println("Name: " + playerName);
+        System.out.println("Job Class: " + jobClass);
+        System.out.println("Level: " + level);
+        System.out.println("Runes: " + runes);
+        System.out.println("Health: " + (character.getHealth() + (selectedWeapon != null ? selectedWeapon.getHp() : 0)));
+        System.out.println("Endurance: " + (character.getEndurance() + (selectedWeapon != null ? selectedWeapon.getEnd() : 0)));
+        System.out.println("Dexterity: " + (character.getDexterity() + (selectedWeapon != null ? selectedWeapon.getDex() : 0)));
+        System.out.println("Strength: " + (character.getStrength() + (selectedWeapon != null ? selectedWeapon.getStr() : 0)));
+        System.out.println("Intelligence: " + (character.getIntelligence() + (selectedWeapon != null ? selectedWeapon.getIntel() : 0)));
+        System.out.println("Faith: " + (character.getFaith() + (selectedWeapon != null ? selectedWeapon.getFth() : 0)));
     }
 
     public void openShop() {
@@ -913,6 +920,9 @@ public class GameLobby {
         this.weaponName = weaponName;
     }
 
+    public Weapon getSelectedWeapon() {
+        return this.selectedWeapon;
+    }
 
     public String getWeaponName(){
         return this.weaponName;
@@ -968,9 +978,6 @@ class Weapon {
     }
 
     // Getters
-    public Weapon getSelectedWeapon() {
-        return this.selectedWeapon;
-    }
     
     public String getName() {
         return name;
