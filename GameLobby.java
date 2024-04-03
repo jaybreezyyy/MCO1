@@ -10,6 +10,7 @@ public class GameLobby {
     private int level;
     private int runes;
     private CharacterCreation character;
+    private Weapon selectedWeapon;
     private String weaponName;
     private int weaponCost;
     private int weaponDex;
@@ -37,7 +38,6 @@ public class GameLobby {
         Scanner scanner = new Scanner(System.in);
         int choice = 0;
         do {
-            clearScreen();
             // Show character details
             System.out.println("DETAILS:");
             System.out.println("Name: " + playerName);
@@ -93,7 +93,7 @@ public class GameLobby {
         do{
         System.out.println("Select destination:");
         System.out.println("[1] Stormveil Castle");
-        System.out.println("[2] Raya Lucaria Academy");
+        System.out.println("[2] Raya Lucaria Academy [LOCKED]");
         System.out.println("[3] The Elden Throne [LOCKED]");
         System.out.print("Your Choice: ");
         int destination = scanner.nextInt();
@@ -102,15 +102,10 @@ public class GameLobby {
         switch (destination) {
             case 1:
                 System.out.println("Fast traveling to Stormveil Castle...");
-                Area area = new Area(character);
-                area.play();
                 continueTraveling = false;
                 break;
             case 2:
-                System.out.println("Raya Lucaria Academy");
-                Area2 area2 = new Area2(character);
-                area2.play();
-                continueTraveling = false;
+                System.out.println("Raya Lucaria Academy is currently locked.");
                 break;
             case 3:
                 System.out.println("The Elden Throne is currently locked.");
@@ -120,8 +115,8 @@ public class GameLobby {
             }
         } while (continueTraveling);
         // Call the next Java code, Area.java, to continue the game
-        //Area area = new Area(character);
-        //area.play();
+        Area area = new Area(character);
+        area.play();
     }
 
     public void levelUp() {
@@ -143,15 +138,8 @@ public class GameLobby {
             System.out.println("[8] Back\n\n");
 
             System.out.println("DETAILS");
-            System.out.println("Level: " + String.valueOf(level));
-            System.out.println("Rune Cost: " + String.valueOf((level * 100) / 2));
-            System.out.println("Runes: " + String.valueOf(character.getRuneCount()));
-            System.out.println("Health: " + String.valueOf(character.getHealth()));
-            System.out.println("Endurance: " + String.valueOf(character.getEndurance()));
-            System.out.println("Dexterity: " + String.valueOf(character.getDexterity()));
-            System.out.println("Strength: " + String.valueOf(character.getStrength()));
-            System.out.println("Intelligence: " + String.valueOf(character.getIntelligence()));
-            System.out.println("Faith: " + String.valueOf(character.getFaith()));
+            displayCharacterDetailsWithWeapon();
+            
             System.out.println("System Messages: ");
             
             System.out.println("Enter your choice: ");
@@ -411,21 +399,6 @@ public class GameLobby {
         }
     }
 
-    // FOR WINDOWS (SYSTEM CLEAR SCREEN)
-    /*public static void clearScreen() { 
-        try {
-            new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-    }*/
-
-    // FOR MAC/UNIX/LINUX OPERATION SYSTEMS (SYSTEM CLEAR SCREEN)
-    public static void clearScreen() {
-        System.out.print("\033[H\033[2J");
-        System.out.flush();
-    }
-
     public void openInventory() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("INVENTORY:");
@@ -440,14 +413,8 @@ public class GameLobby {
         int choice = scanner.nextInt();
         if (choice > 0 && choice <= inventory.size()) {
             Weapon selectedWeapon = inventory.get(choice - 1);
-            System.out.println(selectedWeapon.getName());
             if (character.getDexterity() >= selectedWeapon.getDexReq()) {
-                character.setHealth(selectedWeapon.getHp());
-                character.setDexterity(selectedWeapon.getDex());
-                character.setEndurance(selectedWeapon.getEnd());
-                character.setStrength(selectedWeapon.getStr());
-                character.setIntelligence(selectedWeapon.getIntel());
-                character.setFaith(selectedWeapon.getFth());
+                this.selectedWeapon = selectedWeapon; // Assign the selected weapon
                 System.out.println(selectedWeapon.getName() + " equipped!");
             } else {
                 System.out.println("Cannot equip " + selectedWeapon.getName() + ". Dexterity requirement not met.");
@@ -458,7 +425,21 @@ public class GameLobby {
             System.out.println("Invalid selection. Please try again.");
         }
     }
-    
+
+    private void displayCharacterDetailsWithWeapon() {
+        System.out.println("DETAILS:");
+        System.out.println("Name: " + playerName);
+        System.out.println("Job Class: " + jobClass);
+        System.out.println("Level: " + level);
+        System.out.println("Runes: " + runes);
+        System.out.println("Health: " + (character.getHealth() + (selectedWeapon != null ? selectedWeapon.getHp() : 0)));
+        System.out.println("Endurance: " + (character.getEndurance() + (selectedWeapon != null ? selectedWeapon.getEnd() : 0)));
+        System.out.println("Dexterity: " + (character.getDexterity() + (selectedWeapon != null ? selectedWeapon.getDex() : 0)));
+        System.out.println("Strength: " + (character.getStrength() + (selectedWeapon != null ? selectedWeapon.getStr() : 0)));
+        System.out.println("Intelligence: " + (character.getIntelligence() + (selectedWeapon != null ? selectedWeapon.getIntel() : 0)));
+        System.out.println("Faith: " + (character.getFaith() + (selectedWeapon != null ? selectedWeapon.getFth() : 0)));
+    }
+
     public void openShop() {
         // Implementation for opening shop
         Scanner scanner = new Scanner(System.in);
@@ -939,6 +920,9 @@ public class GameLobby {
         this.weaponName = weaponName;
     }
 
+    public Weapon getSelectedWeapon() {
+        return this.selectedWeapon;
+    }
 
     public String getWeaponName(){
         return this.weaponName;
@@ -951,23 +935,23 @@ public class GameLobby {
         return this.weaponHp;
     }
 
-    public int getweaponDex(){
+    public int getWeaponDex(){
         return this.weaponDex;
     }
     
-    public int getweaponEnd(){
+    public int getWeaponEnd(){
         return this.weaponEnd;
     }
 
-    public int getweaponFth(){
+    public int getWeaponFth(){
         return this.weaponFth;
     }
     
-    public int getweaponInt(){
+    public int getWeaponInt(){
         return this.weaponInt;
     }
     
-    public int getweaponStr(){
+    public int getWeaponStr(){
         return this.weaponStr;
     }
 
@@ -994,6 +978,7 @@ class Weapon {
     }
 
     // Getters
+    
     public String getName() {
         return name;
     }
