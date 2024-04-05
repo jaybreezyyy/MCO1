@@ -1,5 +1,10 @@
 import java.util.Scanner;
 
+/**
+ * Handles character creation for the player, including setting the character's name, job class, and initial stats.
+ * This class is responsible for prompting the user through the character creation process,
+ * including selecting a job class which determines the character's starting stats.
+ */
 public class CharacterCreation {
     private String name;
     private String jobClass;
@@ -15,6 +20,10 @@ public class CharacterCreation {
     private int currentHp;
     private Weapon selectedWeapon;
 
+    /**
+     * Initiates the character creation process. Allows the player to input a name, select a job class, and confirm their choices.
+     * This method utilizes a loop to continuously prompt the player until they confirm their character creation or choose to go back.
+     */
     public void createCharacter() {
         Scanner scanner = new Scanner(System.in);
         int choice = 0;
@@ -42,7 +51,7 @@ public class CharacterCreation {
                 case 3:
                     if (name != null && !name.isEmpty() && jobClass != null && !jobClass.isEmpty()) {
                         System.out.println("Confirming character creation...");
-                        printCharacterDetails();   
+                        printCharacterDetails();
                         GameLobby gameLobby = new GameLobby(name, jobClass, 1, 0, this); // Assuming initial level is 1 and initial runes is 0
                         gameLobby.showGameLobby();
                         return; // Exit the method after transitioning to the GameLobby
@@ -62,6 +71,12 @@ public class CharacterCreation {
         } while (true); // Changed to ensure the loop only exits on explicit conditions
     }
 
+    /**
+     * Prompts the player to input their character's name.
+     * Ensures the name does not exceed a maximum length of 25 characters.
+     *
+     * @param scanner The Scanner object for input.
+     */
     private void inputName(Scanner scanner) {
         System.out.println("Enter your name (Maximum 25 characters):");
         String inputName = scanner.nextLine(); // Changed to nextLine to allow spaces in names
@@ -71,6 +86,12 @@ public class CharacterCreation {
         name = inputName;
     }
 
+    /**
+     * Displays job class options and prompts the player to select one.
+     * Each job class has different starting stats that are displayed to the player.
+     *
+     * @param scanner The Scanner object for input.
+     */
     private void selectJobClass(Scanner scanner) {
         clearScreen();
         System.out.println("Select your job class:");
@@ -118,27 +139,40 @@ public class CharacterCreation {
         System.out.println("Selected job class: " + jobClass);
     }
 
-    public void setCurrentHp(int currentHp){
-        this.currentHp = currentHp;
-    }
-
-    public void calcMaxHp(){
-        int weaponHp;
-        if(this.selectedWeapon == null)
-            weaponHp = 0;
-        else    
-            weaponHp = this.selectedWeapon.getHp();
-        this.maxHp = 100 * ((this.baseHp + weaponHp) / 2);
-        this.currentHp = this.maxHp;
-    }
-
+    /**
+     * Sets the job class stats based on the player's selection.
+     * These stats include HP, Endurance, Dexterity, Strength, Intelligence, and Faith.
+     *
+     * @param hp The health points of the character.
+     * @param end The endurance stat of the character.
+     * @param dex The dexterity stat of the character.
+     * @param str The strength stat of the character.
+     * @param intell The intelligence stat of the character.
+     * @param fth The faith stat of the character.
+     */
     private void setJobStats(int hp, int end, int dex, int str, int intell, int fth) {
-        this.baseHp = hp;
+        this.hp = hp;
         this.end = end;
         this.dex = dex;
         this.str = str;
         this.intell = intell;
         this.fth = fth;
+    }
+
+    public void setCurrentHp(int currentHp){
+        this.currentHp = currentHp;
+    }
+
+    // Additional setters and getters follow...
+
+    /**
+     * Calculates and sets the maximum health of the character based on the base health and any health bonuses from the equipped weapon.
+     */
+    public void calcMaxHp(){
+        int weaponHp = this.selectedWeapon != null ? this.selectedWeapon.getHp() : 0;
+        this.maxHp = 100 * (this.baseHp + weaponHp) / 2;
+        this.hp = this.maxHp; // Set hp to maxHp
+        this.currentHp = this.maxHp; // Initialize currentHp to maxHp
     }
 
     public void setMaxHp(int maxHp){
@@ -182,9 +216,6 @@ public class CharacterCreation {
         return false;
         
     }
-
-
-
     
     public boolean subtractHp(int amount){
         if(currentHp - amount >= 0)
@@ -195,7 +226,7 @@ public class CharacterCreation {
         return false;
         
     }
-    
+
     public Weapon getSelectedWeapon(){
         return this.selectedWeapon;
     }
@@ -239,10 +270,10 @@ public class CharacterCreation {
     }
 
     public int getMaxHp(){
-        return this.maxHp;
+        // Recalculate maxHp based on current attributes
+        int weaponHp = this.selectedWeapon != null ? this.selectedWeapon.getHp() : 0;
+        return 100 * (this.baseHp + weaponHp) / 2;
     }
-
-
 
     // FOR WINDOWS (SYSTEM CLEAR SCREEN)
     /*public static void clearScreen() { 
@@ -253,8 +284,6 @@ public class CharacterCreation {
         }
     }*/
 
-    
-
     // FOR MAC/UNIX/LINUX OPERATION SYSTEMS (SYSTEM CLEAR SCREEN)
     public static void clearScreen() {
         System.out.print("\033[H\033[2J");
@@ -262,6 +291,10 @@ public class CharacterCreation {
     }
     
 
+    /**
+     * Prints the details of the character, including name, job class, and stats.
+     * This method is called after confirming character creation to summarize the character's attributes.
+     */
     private void printCharacterDetails() {
         System.out.println("Character Details:");
         System.out.println("Name: " + name);
