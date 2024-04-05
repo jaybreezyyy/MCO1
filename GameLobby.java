@@ -104,19 +104,19 @@ public class GameLobby {
             case 1:
                 System.out.println("Fast traveling to Stormveil Castle...");
                 //character.playerMaxHp();
-                Area area = new Area(character);
+                Area area = new Area(character, this);
                 area.play();
                 continueTraveling = false;
                 break;
             case 2:
                 System.out.println("Raya Lucaria Academy");
-                Area2 area2 = new Area2(character);
+                Area2 area2 = new Area2(character, this);
                 area2.play();
                 continueTraveling = false;
                 break;
             case 3:
                 System.out.println("Raya Lucaria Academy");
-                Area3 area3 = new Area3(character);
+                Area3 area3 = new Area3(character, this);
                 area3.play();
                 continueTraveling = false;
                 break;
@@ -926,7 +926,9 @@ public class GameLobby {
         ;
     }
     
-       
+    public int getLevel(){
+        return this.level;
+    }
     
     public void setWeaponStat(int weaponHp, int weaponDex, int weaponEnd, int weaponFth, int weaponInt, int weaponStr, int dexReq){
         this.weaponHp = weaponHp;

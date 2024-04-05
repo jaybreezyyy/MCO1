@@ -14,8 +14,9 @@ public class Area3 {
     private boolean leaveFloor;
     private CharacterCreation character;
     private int areaIndex;
+    private GameLobby level;
 
-    public Area3(CharacterCreation character) {
+    public Area3(CharacterCreation character, GameLobby level) {
         initializeFloors();
         playerX = 8; // Initial player position
         playerY = 1; // Initial player position
@@ -26,6 +27,7 @@ public class Area3 {
         leaveFloor = false;
         this.character = character;
         areaIndex = 3;
+        this.level = level;
     }
 
     private void initializeFloors() {
@@ -92,6 +94,9 @@ public class Area3 {
         do {
             displayArea();
             System.out.println("Enter your move (W/A/S/D to move, E to interact, Q to quit): ");
+            System.out.println("Area: The elden throne");
+            System.out.println("Level:" + level.getLevel());
+            System.out.println("Runes:" + String.valueOf(character.getRuneCount()));
             action = scanner.next().charAt(0);
             clearScreen();
             interacted = interactWithTile(action); // Check if the player interacted with a special tile

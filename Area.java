@@ -14,9 +14,11 @@ public class Area {
     private boolean leaveFloor;
     private CharacterCreation character;
     private int areaIndex;
+    private GameLobby level;
     
 
-    public Area(CharacterCreation character) {
+
+    public Area(CharacterCreation character, GameLobby level) {
         initializeFloors();
         playerX = 6; // Initial player position
         playerY = 1; // Initial player position
@@ -27,6 +29,7 @@ public class Area {
         leaveFloor = false;
         this.character = character;
         this.areaIndex = 1;
+        this.level = level;
     }
 
     private void initializeFloors() {
@@ -89,6 +92,9 @@ public class Area {
         do {
             displayArea();
             System.out.println("Enter your move (W/A/S/D to move, E to interact, Q to quit): ");
+            System.out.println("AREA: Stormveil Castle");
+            System.out.println("Level:" + level.getLevel());
+            System.out.println("Runes:" + String.valueOf(character.getRuneCount()));
             action = scanner.next().charAt(0);
             clearScreen();
             interacted = interactWithTile(action); // Check if the player interacted with a special tile
