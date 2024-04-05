@@ -229,15 +229,14 @@ public class Area2 {
 
     private void checkSpecialTile() {
         Tile2 currentTile = getCurrentFloor()[playerX][playerY];
-        if (currentTile.isBoss()) {
-            if (!bossDefeated) {
-                System.out.println("You've encountered the boss!");
-                // Implement boss battle
+        if (currentTile.isBoss() && !bossDefeated) {
+            System.out.println("You've encountered the boss!");
+            BossBattle battle = new BossBattle(character, 2);
+            battle.display();
+            if (battle.isBossDefeated()) {
                 bossDefeated = true; // Mark the boss as defeated
                 currentTile.setBossInteracted(true); // Mark the boss tile as interacted
                 currentTile.setBoss(false); // Remove the boss tile
-            } else {
-                System.out.println("Boss already defeated. Tile has no effect.");
             }
         } else if (currentTile.isSpawn()) {
             System.out.println("You've encountered a spawn tile!");
