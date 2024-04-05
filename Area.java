@@ -278,6 +278,8 @@ public class Area {
         }
     }
 
+    
+
     // FOR WINDOWS (SYSTEM CLEAR SCREEN)
     /*public static void clearScreen() { 
         try {

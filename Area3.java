@@ -257,6 +257,8 @@ public class Area3 {
         int randomRune = (int)Math.floor(Math.random() * (runeMax - runeMin + 1) + runeMin); //Generates a random number from 50 - 150 for rune tiles
         if (chance <= 75) {
             System.out.println("You've encountered a Monster!");
+            Battle battle = new Battle(character, 3);
+            battle.display();
         } else {
             System.out.println("You've encountered a Rune!");
             System.out.println("You've obtained " + randomRune + " Runes");
